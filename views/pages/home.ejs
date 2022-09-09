@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+
+  <main class="content">
+
+    <div class="content-header">
+      <h2>All Processes</h2>
+      JanD <%= status.Version %>
+
+      <% if (status.NotSaved) {%>
+        <div class="alert warn">
+          <p>
+            Your process list or configuration is not saved.
+          </p>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="content-content">
+      
+      <% for (const process of processes) {%>
+        
+        <div class="card">
+          <div class="card-header" style="display:grid; grid-template-columns: auto max-content;">
+            <span>
+              <a href="#" class="link">
+                <b>
+                  <%= process.Name %>
+                </b>
+              </a>
+              <div class="card-footer" style="font-size: small; font-weight: normal;">
+                <%= process.WorkingDirectory %>
+                <code class="code"><%= process.Filename %> <%= process.Arguments.join(' ') %></code>
+              </div>
+            </span>
+            
+            <% if (process.Running) { %>
+              <span class="tag success">
+                Running
+              </span>
+              <%} else if (process.Enabled) { %>
+                <span class="tag error">
+                  Stopped
+                </span>
+                <%} else { %>
+                  <span class="tag disabled">
+                    Disabled
+                  </span>
+                  <%} %>
+                </div>
+                
+
+                <div style="display:grid; grid-template-columns: auto max-content;">
+                  <div>
+                    <%= process.AutoRestart ? 'Auto Restart | ' : '' %> 🔄 <%= process.RestartCount %> times | PID <%= process.ProcessId %>
+                  </div>
+                  <div>
+                    <div class="button primary">Restart</div>
+                    <div class="button danger">Stop</div>
+                  </div>
+                </div>
+                
+              </div>
+              <% } %>
+              
+    </div>
+
+  </main>
+
+</body>
+
+</html>

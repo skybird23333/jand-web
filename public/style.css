@@ -1,0 +1,693 @@
+/* CARD */
+
+/* The most basic element - can be used to contain almost anything. */
+.card {
+    border: 1px solid var(--foreground-border);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    height: auto;
+}
+
+/* Adding a background to the card with the secondary background color. */
+.card.background {
+    background: var(--background-secondary);
+}
+
+/* Lists are moved left in cards to make it appear more compact. */
+.card ul {
+    margin: 0;
+    padding-left: 0.5cm;
+}
+
+.card.color-red {
+    border-left: 5px solid var(--red);
+}
+
+.card.color-green {
+    border-left: 5px solid var(--green);
+}
+
+.card.color-blue {
+    border-left: 5px solid var(--blue);
+}
+
+.card.color-yellow {
+    border-left: 5px solid var(--yellow);
+}
+
+.card.color-border {
+    border-left: 5px solid var(--foreground-border);
+}
+
+.card .card-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.card .card-footer {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-top: 0.5em;
+    color: var(--foreground-secondary);
+}
+/* BUTTONS */
+
+/* Your everyday button */
+.button {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-tertiary);
+    color: var(--foreground-primary);
+    box-shadow: none;
+    padding: 7px;
+    border-radius: 4px;
+    border: 1px solid var(--foreground-border);
+    outline: none;
+    display: inline-block;
+    transition: filter 0.4s, border-color 0.4s, background-color 0.4s;
+    text-decoration: none;
+}
+
+
+/* This will invert the button colours to highlight it. */
+.button.selected {
+    color: var(--background-primary);
+    background-color: var(--foreground-primary);
+}
+
+.button.primary,
+.button.danger,
+.button.warn,
+.button.confirm {
+    border-color: transparent;
+}
+
+.button.primary {
+    background-color: var(--blue);
+}
+
+.button.danger {
+    background-color: var(--red);
+}
+
+.button.warn {
+    background-color: var(--yellow);
+}
+
+.button.confirm {
+    background-color: var(--green);
+}
+
+.button.hollow {
+    background: none;
+    border: 1px solid var(--foreground-border);
+}
+
+.button.borderless {
+    border: none;
+}
+
+
+.button:hover {
+    border: 1px solid var(--foreground-primary);
+    filter: brightness(130%);
+    cursor: pointer;
+}
+
+.button.hollow:hover {
+    border: 1px solid var(--foreground-primary);
+}
+
+.button.borderless:hover {
+    border: none
+}
+.button[disabled], .button[disabled]:hover {
+    filter: brightness(70%);
+    border: none;
+    cursor: default;
+}
+
+/*You will need this if the button isn't staying in shape*/
+.button-container {
+    display: inline-flex;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+/* INPUT */
+.input {
+    background-color: var(--background-tertiary);
+    color: var(--foreground-primary);
+    box-shadow: none;
+    padding: 7px;
+    border-radius: 4px;
+    margin: 5px;
+    border: 1px solid var(--foreground-border);
+    outline: none;
+    transition: filter 0.4s, border-color 0.4s;
+}
+
+.input.hollow {
+    background: none;
+    border: 1px solid var(--foreground-border);
+}
+
+.input.error {
+    border: 1px solid var(--red);
+}
+
+
+.input:hover,
+.input:focus{
+    border: 1px solid var(--foreground-primary);
+}
+.input:hover {
+    filter: brightness(130%);
+}
+
+.input[disabled], .input[disabled]:hover {
+    filter: brightness(70%);
+    border: none;
+}
+
+
+/* LINK */
+/* The link is set brighter to better suit dark mode.*/
+.link {
+    color: #38a7fc;
+    text-decoration: none;
+  }
+  
+  .link:visited {
+    color: #a697ea;
+  }
+
+.link:hover {
+    text-decoration: underline;
+}
+
+
+/* CODE BLOCK */
+pre {
+    background-color: var(--background-secondary);
+    border: 2px solid var(--foreground-border);
+    border-radius: 4px;
+    padding: 10px;
+    color: var(--foreground-primary);
+}
+
+/* QUOTE AND INFORMATION */
+.quote,
+.alert p,
+.alert.info p,
+.alert.warn p,
+.alert.error p {
+    background: var(--background-primary);
+    border: 1px solid var(--foreground-secondary);
+    border-radius: 4px;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+}
+
+.alert.info p {
+    background-color: var(--blue);
+    border-color: #0077ff;
+}
+
+.alert.warn p {
+    background-color: var(--yellow);
+    border-color: #efbf00;
+}
+
+.alert.error p {
+    background-color: var(--red);
+    border-color: #bc0000;
+}
+
+.alert.success p {
+    background-color: var(--green);
+    border-color: #00e600;
+}
+
+/* TABLE */
+.table {
+    background-color: var(--background-tertiary);
+    border-collapse: collapse;
+    border: 1px solid var(--foreground-border);
+  }
+  
+  .table
+  th, td {
+    border: 1px solid var(--foreground-border);
+    padding: 5px;
+  }
+
+  /*--background-primary: rgb(49, 49, 49);  Content & navbar background */
+/* --background-secondary: #161616;  The background behind content */
+/* --foreground-secondary:rgb(235, 235, 235);  Secondary text but not used */
+/* --foreground-primary:  Content border, primary text */
+
+:root {
+    --background-primary: #111111;
+    --background-secondary: #1a1a1a;
+    --background-tertiary: #222222;
+    --foreground-primary: rgb(218, 213, 213);
+    --foreground-secondary: rgb(165, 165, 165);
+    --foreground-border: rgb(56, 56, 56);
+    --blue: #18488f;
+    --red: #8a1010;
+    --yellow: #a56023;
+    --green: #068606;
+}
+
+/* :root {
+      --background-primary: rgb(254, 254, 254);
+      --background-secondary: #e2e2e2;
+      --background-tertiary: #ffffff;
+      --foreground-primary: rgb(0, 0, 0);
+      --foreground-secondary: rgb(104, 104, 104);
+      --foreground-border: rgb(216, 216, 216);
+  } */
+
+html {
+    min-height: 100%;
+}
+
+body {
+    background-color: var(--background-primary);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    color: var(--foreground-primary);
+    overflow-x: hidden;
+    position: relative;
+    z-index: -1001;
+
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-size: 100% auto;
+    flex: 1;
+}
+
+.navbar {
+    height: 60px;
+    background-color: var(--background-secondary);
+    z-index: 123435589;
+    width: 100%;
+    box-shadow: 0 -1px 8px 0px black;
+    position: absolute;
+}
+
+.navbar-content {
+    padding: 10px;
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .navbar {
+        background: none;
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+    }
+}
+
+.navbar-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.navbar-links li {
+    display: contents;
+}
+
+@media only screen and (max-width: 500px) {
+    .navbar-links {
+        display: none;
+    }
+}
+
+.content-header {
+    margin-block-start: 0;
+    padding: 20px 20px;
+    background-color: var(--background-primary);
+    padding-top: 75px;
+    border-bottom: 1px solid var(--foreground-border);
+}
+
+.content-header h1 {
+    font-size: 45px;
+}
+
+.content-content h1 {
+    font-size: xx-large;
+}
+
+.content-header h3 {
+    color: var(--foreground-primary);
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+}
+
+.content-header,
+.content-content h1,
+h2,
+h3 {
+    margin-block-start: 0;
+    margin-block-end: 10px;
+}
+
+.content {
+    max-width: 50%;
+    min-width: 1000px;
+    margin: auto;
+    background-color: var(--background-primary);
+    z-index: -1000;
+    position: relative;
+    border: 1px solid var(--foreground-border);
+    border-top: none;
+    padding-bottom: 50px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+        min-width: initial;
+        border: none;
+    }
+
+    .content-header h1 {
+        font-size: xx-large;
+    }
+}
+
+.content-content {
+    padding: 25px;
+    padding-top: 10px;
+    color: var(--foreground-primary);
+}
+
+.content-content h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.site-name a {
+    left: 20px;
+    font-size: xx-large;
+    font-weight: bold;
+    color: var(--foreground-primary);
+    text-decoration: none;
+}
+
+.footer {
+    bottom: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+.is-center {
+    text-align: center;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: min-content;
+    background-color: var(--background-secondary);
+    color: var(--foreground-primary);
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--foreground-border) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.card-collapsible {
+    border-radius: 4px;
+    margin: 3px;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--foreground-border);
+}
+
+.card-collapsible .card-collapsible-header {
+    font-size: x-large;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+    padding: 5px;
+    transition: filter 0.4s;
+}
+
+.card-collapsible .card-collapsible-header:hover {
+    cursor: pointer;
+}
+
+.card-collapsible-header.active::before {
+    content: "+";
+    transform: rotate(45deg);
+}
+
+.card-collapsible-header::before {
+    transition: transform 0.4s;
+    content: "+";
+}
+
+.card-collapsible .card-content {
+    max-height: 0;
+    padding: 0 10px;
+    overflow: hidden;
+    transition: max-height 0.2s;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.card-collapsible-header:after {
+    content: "";
+    font-size: 13px;
+    color: white;
+    margin-left: 5px;
+}
+
+/* Collapisble card events are registered in footer */
+
+.l-box {
+    padding: 1em;
+}
+
+
+
+.button.selected {
+    color: var(--background-primary);
+    background-color: var(--foreground-primary);
+}
+
+.button:hover {
+    filter: brightness(110%);
+}
+
+
+
+.button-mcpedl {
+    background-color: green;
+    color: white;
+}
+
+.button-github {
+    border: 1px solid grey;
+}
+
+.l-box {
+    padding: 1em;
+}
+
+.form {
+    display: grid;
+    margin: 12px;
+}
+
+.label {
+    background-color: var(--background-tertiary);
+    margin: 2px;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.prog-container {
+    background-color: var(--background-tertiary);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.prog-content {
+    background-color: var(--foreground-primary);
+    height: 5px;
+}
+
+.prog-content-large {
+    background-color: var(--foreground-primary);
+    height: 15px;
+}
+
+/* The sidebar menu */
+.side-contents {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: calc((100% - 1200px)/2);
+    margin-right: 0;
+    background-color: var(--background-secondary);
+    overflow-x: hidden;
+    padding: 20px;
+    padding-top: 80px;
+}
+
+.side-contents * {
+    margin: 6px;
+}
+
+.side-contents a {
+    color: var(--foreground-primary);
+    display: block;
+    padding: 6px;
+    margin: none;
+    text-decoration: none;
+    transition: filter .4s;
+}
+
+.side-contents a:hover {
+    filter: brightness(130%);
+}
+
+/* The content will move only if there is a side contents.*/
+.side-contents+.content {
+    margin-left: calc((100% - 800px)/2);
+}
+
+@media only screen and (max-width: 1300px) {
+    .side-contents {
+        height: max-content;
+        min-width: 100%;
+        max-width: 100%;
+        position: relative;
+        z-index: 1;
+        margin: auto;
+        background-color: var(--background-secondary);
+        overflow-x: hidden;
+        padding-top: 80px;
+        left: 0;
+    }
+
+    .side-contents a {
+        color: var(--foreground-primary);
+        display: block;
+        padding: 6px;
+        font-size: larger;
+        text-decoration: none;
+        transition: filter .4s;
+    }
+
+    
+    .side-contents+.content {
+        margin: auto; 
+        /* small screen support soon */
+    }
+}
+
+
+/* TODO: Think of a better solution to integrate with components-style.css */
+.info p,
+.warn p,
+.error p {
+    background: var(--background-primary);
+    border: 1px solid var(--foreground-secondary);
+    border-radius: 4px;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+}
+
+.info p {
+    background-color: var(--blue);
+    border-color: #0077ff;
+}
+
+.warn p {
+    background-color: var(--yellow);
+    border-color: #efbf00;
+}
+
+.error p {
+    background-color: var(--red);
+    border-color: #bc0000;
+}
+
+.success p {
+    background-color: var(--green);
+    border-color: #00e600;
+}
+
+.tag {
+    border: 3px solid var(--foreground-primary);
+    background-blend-mode: multiply;
+    width: max-content;
+    height: min-content;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.tag.success {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.tag.disabled {
+    border-color: var(--foreground-secondary);
+    color: var(--foreground-secondary);
+}
+
+.tag.error {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.code {
+    background-color: var(--background-secondary);
+    padding: 5px;
+    border-radius: 5px;
+}
