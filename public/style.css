@@ -663,12 +663,13 @@ h6 {
 }
 
 .tag {
-    border: 3px solid var(--foreground-primary);
+    border: 2px solid var(--foreground-primary);
     background-blend-mode: multiply;
     width: max-content;
     height: min-content;
-    border-radius: 5px;
-    padding: 4px;
+    border-radius: 3px;
+    padding: 3px;
+    font-weight: bold;
 }
 
 .tag.success {

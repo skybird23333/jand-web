@@ -9,7 +9,8 @@ app.use('/', express.static('public'))
 app.get('/', async (req, res) => {
     const processes = await jand.getRuntimeProcessList()
     const status = await jand.getDaemonStatus()
-    res.render('pages/home', { processes: processes, status: status })
+    const pid = process.pid
+    res.render('pages/home', { processes: processes, status: status, pid: pid })
 })
 
 async function run() {
