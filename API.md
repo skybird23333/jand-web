@@ -51,7 +51,7 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 
 ## Edit a processes running config
 
-**PATCH**/**PUT** `/process/:name/runconfig`
+**PATCH** `/process/:name/runconfig`
 
 > At least one field should be provided.
 
@@ -71,7 +71,7 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 
 ## Change process configuration
 
-**PUT**/**PATCH** `/process/:name/config`
+**PATCH** `/process/:name/config`
 
 > After a successful request, the process then needs to be restarted for this to take effect.
 
@@ -119,7 +119,7 @@ Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemon
 
 ## Edit the daemon config
 
-**PUT**/**PATCH** `/daemon/config`
+**PATCH** `/daemon/config`
 
 For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-ipc#config--object)
 
