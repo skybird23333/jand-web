@@ -3,15 +3,16 @@
 - [Definitions](#definitions)
 - [Processes](#processes)
   - [Get all running processes](#get-all-running-processes)
-  - [Get JanD daemon status](#get-jand-daemon-status)
-  - [Save the daemon process list](#save-the-daemon-process-list)
-  - [Get the daemon config](#get-the-daemon-config)
-  - [Edit the daemon config](#edit-the-daemon-config)
   - [Edit a processes running config](#edit-a-processes-running-config)
   - [Rename a process](#rename-a-process)
   - [Change process configuration](#change-process-configuration)
   - [Stop a process](#stop-a-process)
   - [Start/restart a process](#startrestart-a-process)
+- [Daemon](#daemon)
+  - [Get JanD daemon status](#get-jand-daemon-status)
+  - [Save the daemon process list](#save-the-daemon-process-list)
+  - [Get the daemon config](#get-the-daemon-config)
+  - [Edit the daemon config](#edit-the-daemon-config)
 - [Console](#console)
   - [Application log stream](#application-log-stream)
   - [Get application log](#get-application-log)
@@ -47,21 +48,6 @@ Date: A UNIX timestamp of number.
 **GET** `/process/all`
 
 Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
-
-## Get JanD daemon status
-
-**GET** `/process/daemon`
-
-Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemonstatus--object)
-
-## Save the daemon process list
-
-**POST** `/process/daemon/save`
-
-## Get the daemon config
-**GET** `/daemon/`
-
-## Edit the daemon config
 
 ## Edit a processes running config
 
@@ -115,6 +101,27 @@ Filename          Arguments
 **POST** `/process/:name/restart`
 
 If the process is not running, this will start it up. If it is already running, this will stop it then start it again.
+
+# Daemon
+
+## Get JanD daemon status
+
+**GET** `/daemon/satus`
+
+Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemonstatus--object)
+
+## Save the daemon process list
+
+**POST** `/daemon/save`
+
+## Get the daemon config
+**GET** `/daemon/config`
+
+## Edit the daemon config
+
+**PUT**/**PATCH** `/daemon/config`
+
+For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-ipc#config--object)
 
 # Console
 
