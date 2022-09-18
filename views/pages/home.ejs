@@ -16,23 +16,23 @@
     <div class="content-header">
       <h2>All Processes</h2>
       JanD <%= status.Version %>
-      jand-web pid: <%= pid %>
+        jand-web pid: <%= pid %>
 
-        <% if (status.NotSaved) {%>
-          <div class="alert warn">
-            <p>
-              Your process list or configuration is not saved.
-            </p>
-          </div>
-          <% } %>
+          <% if (status.NotSaved) {%>
+            <div class="alert warn">
+              <p>
+                Your process list or configuration is not saved.
+              </p>
+            </div>
+            <% } %>
     </div>
 
     <div class="content-content">
 
       <% for (const process of processes) {%>
-        <% if (pid == process.ProcessId) continue %>
+        <% if (pid==process.ProcessId) continue %>
 
-        <div class="card">
+          <div class="card">
             <span>
               <% if (process.Running) { %>
                 <span class="tag success">Running</span>
@@ -44,27 +44,35 @@
                       <a href="#" class="link">
                         <%= process.Name %>
                       </a>
-          <div class="card-footer" style="font-size: small; font-weight: normal;">
-            <%= process.WorkingDirectory %>
-              <code class="code"><%= process.Filename %> <%= process.Arguments.join(' ') %></code>
-          </div>
-          </span>
+                      <div class="card-footer" style="font-size: small; font-weight: normal;">
+                        <%= process.WorkingDirectory %>
+                          <code class="code"><%= process.Filename %> <%= process.Arguments.join(' ') %></code>
+                      </div>
+            </span>
 
 
 
-          <div style="display:grid; grid-template-columns: auto max-content;">
-            <div>
-              <%= process.AutoRestart ? 'Auto Restart | ' : '' %> 🔄 <%= process.RestartCount %> times | PID <%=
-                    process.ProcessId %>
+            <div style="display:grid; grid-template-columns: auto max-content;">
+              <div style="display: block; margin-top: 10px">
+                <span class="label">
+                  Auto restart
+                  <%= process.AutoRestart ? 'enabled ' : 'disabled ' %>
+                </span>
+                <span class="label">
+                  Restarted <%= process.RestartCount %> times
+                </span>
+                <span class="label">
+                  PID <%=process.ProcessId %>
+                </span>
+              </div>
+              <div>
+                <div class="button primary">Restart</div>
+                <div class="button danger">Stop</div>
+              </div>
             </div>
-            <div>
-              <div class="button primary">Restart</div>
-              <div class="button danger">Stop</div>
-            </div>
-          </div>
 
-        </div>
-        <% } %>
+          </div>
+          <% } %>
 
     </div>
 

@@ -59,7 +59,6 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 | ------------ | ------- | ------------------------------------------------------------- |
 | enabled?     | Boolean | Whether the application will restart once the machine reboots |
 | autorestart? | Boolean | The timestamp of the log                                      |
-| autorestart? | Boolean | The timestamp of the log                                      |
 
 ## Rename a process
 **POST** `/process/:name/edit`
@@ -106,7 +105,7 @@ If the process is not running, this will start it up. If it is already running, 
 
 ## Get JanD daemon status
 
-**GET** `/daemon/satus`
+**GET** `/daemon/status`
 
 Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemonstatus--object)
 

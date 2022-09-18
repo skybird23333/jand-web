@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "outDir": "./dist-srv",
+    "rootDir": "./srv",
+    "baseUrl": ".",
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "srv/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
