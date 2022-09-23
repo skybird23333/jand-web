@@ -1,7 +1,29 @@
-<script setup>
+<script>
 import ContentHead from '../components/Common/ContentHead.vue';
 import ContentMain from '../components/Common/ContentMain.vue';
-import Process from '../components/Home/Process.vue'
+import ProcessComponent from '../components/Home/ProcessComponent.vue';
+
+export default {
+  name: 'Home',
+  components: {
+    ContentHead,
+    ContentMain,
+    ProcessComponent
+  },
+  data() {
+    return {
+      processes: []
+    }
+  },
+  mounted() {
+    this.fetchProcesses();
+  },
+  methods: {
+    async fetchProcesses() {
+      this.processes = await this.$client.getAllProcess()
+    }
+  }
+}
 </script>
 
 <template>
@@ -12,7 +34,7 @@ import Process from '../components/Home/Process.vue'
       </h2>
     </ContentHead>
     <ContentMain>
-      <Process></Process>
+      <ProcessComponent v-for="process in processes" :key="process.id" :process="process" />
     </ContentMain>
   </div>
 </template>
