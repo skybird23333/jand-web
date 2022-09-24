@@ -5,7 +5,7 @@ import { apiRouter } from './routes'
 const app = express()
 app.set('view engine', 'ejs')
 
-app.use('/', express.static('public'))
+app.use('/', express.static('dist-app'))
 app.use('/api', apiRouter)
 
 async function run() {

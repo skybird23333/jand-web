@@ -11,5 +11,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  envDir: './app'
+  envDir: './app',
+  build: {
+    outDir: './dist-app'
+  }
 })
