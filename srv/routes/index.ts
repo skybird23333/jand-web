@@ -16,7 +16,7 @@ apiRouter.get('/', (req:Request, res:Response) => {
     res.json({message: 'Hello World!'})
 })
 
-apiRouter.get('*', (req:Request, res:Response) => {
+apiRouter.all('*', (req:Request, res:Response) => {
     apiError(req, res, 404, 'Endpoint not found')
 })
 
