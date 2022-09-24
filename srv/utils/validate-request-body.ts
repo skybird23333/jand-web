@@ -8,18 +8,18 @@ interface FieldOptions {
  * @param data The request data
  * @param fields The fields, with the key being the field name and value being the type.
  */
-export default function validateRequestBody(data: any, fields: Record<string, FieldOptions>): any {
+export default function validateRequestBody<T>(data: object, fields: Record<string, FieldOptions>): T {
 
     const newData = {}
 
     for (const field of Object.keys(fields)) {
         // Data has field?
-        if (data[field]) {
+        if (data.hasOwnProperty(field)) {
             //type is correct?
-            if (typeof data[field] === data[field].type) throw TypeError(`Field ${field} is not of type ${data[field].type}`)
+            if (!(typeof data[field] === fields[field].type)) throw TypeError(`Field ${field}(${typeof data[field]}) is not of type ${fields[field].type}`)
             newData[field] = data[field]
         }
     }
 
-    return newData
+    return newData as T
 }
