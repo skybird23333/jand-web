@@ -25,7 +25,7 @@ export default {
         border: Boolean,
         color: String,
     },
-    mounted() {
+    updated() {
         this.colorClass = `color-${this.color}`
     }
 };
