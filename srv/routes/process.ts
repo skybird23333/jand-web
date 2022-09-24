@@ -11,6 +11,10 @@ router.get('/all', async (req: Request, res: Response) => {
 })
 
 
+router.get('/:name', async (req: Request, res: Response) => {
+    const { name } = req.params
+    res.json(await getProcessInfo(name))
+})
 
 router.post('/:name/edit', async (req, res) => {
     try {
