@@ -31,7 +31,7 @@ localhost:3001/api
 
 **Error handling**
 
-Errors use the standard HTTP response code(404, 403 etc.)
+Errors use the standard HTTP response code(404, 403 etc.). Error responses are not in JSON format, but plain text.
 
 **Data format**
 
