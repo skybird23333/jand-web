@@ -6,6 +6,7 @@
   - [Edit a processes running config](#edit-a-processes-running-config)
   - [Rename a process](#rename-a-process)
   - [Change process configuration](#change-process-configuration)
+  - [Get a processes information](#get-a-processes-information)
   - [Stop a process](#stop-a-process)
   - [Start/restart a process](#startrestart-a-process)
 - [Daemon](#daemon)
@@ -60,7 +61,7 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 | enabled?     | Boolean | Whether the application will restart once the machine reboots |
 | autorestart? | Boolean | The timestamp of the log                                      |
 
-Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+Returns: the modified [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
 
 ## Rename a process
 **POST** `/process/:name/edit`
@@ -70,7 +71,7 @@ Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
 | ------ | ------ | ----------------------- |
 | name   | String | Name of the new process |
 
-Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+Returns: the modified [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
 
 ## Change process configuration
 
@@ -84,7 +85,7 @@ Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
 | Arguments        | String[] | An array of arguments for the command.           |
 | WorkingDirectory | String   | Working directory of the process.                |
 
-Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+Returns: the modified [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
 
 Examples of filename/arguments
 
@@ -96,18 +97,23 @@ Filename          Arguments
 ```
 
 
+## Get a processes information
+**GET** `/process/:name`
+
+Returns: the [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
+
 ## Stop a process
 
 **POST** `/process/:name/stop`
 
-Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+Returns: the modified [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
 
 
 ## Start/restart a process
 
 **POST** `/process/:name/restart`
 
-Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+Returns: the modified [jand-ipc.RuntimeProcessInfo](https://github.com/skybird23333/jand-ipc#runtimeprocessinfo--object)
 
 If the process is not running, this will start it up. If it is already running, this will stop it then start it again.
 
