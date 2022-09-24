@@ -1,7 +1,7 @@
 import { apiError } from "../modules/apiError"
 import validateRequestBody from "../utils/validate-request-body"
-import { Request, Response, Router } from "express"
-import { getProcessInfo, getRuntimeProcessList, renameProcess, setEnabled, setProcessProperty } from "jand-ipc"
+import { NextFunction, Request, Response, Router } from "express"
+import { getProcessInfo, getRuntimeProcessList, renameProcess, restartProcess, setEnabled, setProcessProperty, stopProcess } from "jand-ipc"
 import { RenameProcessData, RuntimeConfigData } from "srv/typings/interfaces"
 
 export const router = Router()
@@ -10,6 +10,14 @@ router.get('/all', async (req: Request, res: Response) => {
     res.json(await getRuntimeProcessList())
 })
 
+router.use(async (req: Request, res: Response, next: NextFunction) => {
+    // check if process exists
+    const processName = req.params.processName
+    if(!processName) return
+    if(!await getProcessInfo(processName)) {
+        return apiError(req, res, 404, 'Process not found')
+    }
+})
 
 router.get('/:name', async (req: Request, res: Response) => {
     const { name } = req.params
@@ -17,9 +25,7 @@ router.get('/:name', async (req: Request, res: Response) => {
 })
 
 router.post('/:name/edit', async (req, res) => {
-    try {
-        if(!await getProcessInfo(req.params.name)) return apiError(req, res, 404, "Process not found")
-        
+    try {        
         const { name } = req.params
         
         const data = validateRequestBody<RenameProcessData>(
@@ -46,9 +52,7 @@ router.post('/:name/edit', async (req, res) => {
 })
 
 router.patch('/:name/runconfig', async (req, res) => {
-    try {
-        if(!await getProcessInfo(req.params.name)) return apiError(req, res, 404, "Process not found")
-        
+    try {        
         const data = validateRequestBody<RuntimeConfigData>(
             req.body,
             {
@@ -83,4 +87,25 @@ router.patch('/:name/runconfig', async (req, res) => {
         else return apiError(req, res, 500, 'Internal Server Error')
     }
 
+})
+
+//stop a process
+router.post('/:name/stop', async (req, res) => {
+    try {
+        await stopProcess(req.params.name)
+        res.json(await getProcessInfo(req.params.name))
+    } catch (e) {
+        console.error(e)
+        return apiError(req, res, 500, 'Internal Server Error')
+    }
+})
+
+router.post('/:name/restart', async (req, res) => {
+    try {
+        await restartProcess(req.params.name)
+        res.json(await getProcessInfo(req.params.name))
+    } catch (e) {
+        console.error(e)
+        return apiError(req, res, 500, 'Internal Server Error')
+    }
 })
