@@ -6,7 +6,9 @@ import ApiError from "./ApiError"
  export default class REST {
     constructor(token) {
         this.token = token
-        this.findBaseURL = this.findBaseURL.bind(this)
+        if(process.env.NODE_ENV === "production") {
+            this.baseURL = '/api'
+        }
     }
 
     async findBaseURL() {
