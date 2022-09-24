@@ -60,6 +60,8 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 | enabled?     | Boolean | Whether the application will restart once the machine reboots |
 | autorestart? | Boolean | The timestamp of the log                                      |
 
+Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+
 ## Rename a process
 **POST** `/process/:name/edit`
 > Processes are identified by their name. If your client caches the processes, you should immediately update the cache upon successful request.
@@ -67,6 +69,8 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 | Params | Type   | Description             |
 | ------ | ------ | ----------------------- |
 | name   | String | Name of the new process |
+
+Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
 
 ## Change process configuration
 
@@ -79,6 +83,8 @@ Returns: An array of [jand-ipc.RuntimeProcessInfo](https://github.com/skybird233
 | Filename         | String   | Name of the file/command name without arguments. |
 | Arguments        | String[] | An array of arguments for the command.           |
 | WorkingDirectory | String   | Working directory of the process.                |
+
+Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
 
 Examples of filename/arguments
 
@@ -94,10 +100,14 @@ Filename          Arguments
 
 **POST** `/process/:name/stop`
 
+Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
+
 
 ## Start/restart a process
 
 **POST** `/process/:name/restart`
+
+Returns: the modified [jand-ipc.RuntimeProcessInfo](process info)
 
 If the process is not running, this will start it up. If it is already running, this will stop it then start it again.
 
