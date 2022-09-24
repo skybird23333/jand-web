@@ -1,98 +1,99 @@
 <script>
 import Card from '../Common/Card.vue';
+
 export default {
-    name: 'Process',
-    components: {
-        Card
-    },
-    props: [
-        'process'
-    ],
-    data() {
-        return {
-            color: 'blue'
-        }
-    },
-    mounted() {
-        this.determineColor()
-    },
-    methods: {
-        determineColor() {
-            this.process.Running ? this.$data.color = 'green' : this.$data.color = 'red'
-        },
-        onClicked() {
-            this.$router.push(`/process/${this.process.Name}`)
-        }
+  name: 'Process',
+  components: {
+    Card
+  },
+  props: [
+    'process'
+  ],
+  data() {
+    return {
+      color: 'blue'
     }
+  },
+  mounted() {
+    this.determineColor()
+  },
+  methods: {
+    determineColor() {
+      this.process.Running ? this.$data.color = 'green' : this.$data.color = 'red'
+    },
+    onClicked() {
+      this.$router.push(`/process/${this.process.Name}`)
+    }
+  }
 }
 </script>
 <template>
-    <Card background :color="color" class="process" @click="onClicked">
+  <Card background :color="color" class="process" @click="onClicked">
 
-        <template #header>
-            <b>{{ process.Name }}</b>
-            <code class="code">
-                {{ process.Filename }}
-                {{ process.Arguments.join(' ') }}
-            </code>
-        </template>
+    <template #header>
+      <b>{{ process.Name }}</b>
+      <code class="code">
+        {{ process.Filename }}
+        {{ process.Arguments.join(' ') }}
+      </code>
+    </template>
 
 
-        <div class="info-grid">
+    <div class="info-grid">
             <span class="working-directory">
                 {{ process.WorkingDirectory }}
             </span>
-            <div style="display: block;">
+      <div style="display: block;">
                 <span class="label" v-if="process.ProcessId != -1">
                     PID {{ process.ProcessId }}
                 </span>
-                <span class="label">
+        <span class="label">
                     Auto restart {{ process.AutoRestart ? 'enabled' : 'disabled' }}
                 </span>
-                <span class="label">
+        <span class="label">
                     Restarted {{ process.RestartCount }} times
                 </span>
-            </div>
-        </div>
-    </Card>
+      </div>
+    </div>
+  </Card>
 </template>
 
 <style scoped>
 
 .process {
-    transition: border-color 0.2s, background-color 0.2s;
-    filter: drop-shadow(1px 1px 8px black);
+  transition: border-color 0.2s, background-color 0.2s;
+  filter: drop-shadow(1px 1px 8px black);
 }
 
 .process:hover {
-    background-color: var(--background-tertiary);
-    border-color: var(--foreground-primary);
-    filter: drop-shadow(3px 3px 8px black);
-    cursor: pointer;
+  background-color: var(--background-tertiary);
+  border-color: var(--foreground-primary);
+  filter: drop-shadow(3px 3px 8px black);
+  cursor: pointer;
 }
 
 .code {
-    background-color: var(--background-primary);
-    margin: 4px;
+  background-color: var(--background-primary);
+  margin: 4px;
 }
 
 .info-grid {
-    display: grid;
-    grid-template-columns: auto max-content;
+  display: grid;
+  grid-template-columns: auto max-content;
 }
 
 .working-directory {
-    font-size: small;
-    font-weight: normal;
+  font-size: small;
+  font-weight: normal;
 }
 
 @media only screen and (max-width: 600px) {
-    .info-grid {
-        grid-template-columns: max-content;
-    }
+  .info-grid {
+    grid-template-columns: max-content;
+  }
 
-    .working-directory {
-        display: none
-    }
+  .working-directory {
+    display: none
+  }
 }
 </style>

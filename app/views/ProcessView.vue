@@ -2,27 +2,22 @@
 import ContentHead from '../components/Common/ContentHead.vue';
 import ContentMain from '../components/Common/ContentMain.vue';
 import ProcessComponent from '../components/Home/ProcessComponent.vue';
+import ConsoleComponent from "../components/Console/ConsoleComponent.vue";
 
 export default {
-  name: 'HomeView',
+  name: 'ProcessView',
   components: {
+    ConsoleComponent,
     ContentHead,
     ContentMain,
     ProcessComponent
   },
   data() {
-    return {
-      processes: []
-    }
+    return {}
   },
   mounted() {
-    this.fetchProcesses();
   },
-  methods: {
-    async fetchProcesses() {
-      this.processes = await this.$client.getAllProcess()
-    }
-  }
+  methods: {}
 }
 </script>
 
@@ -30,11 +25,12 @@ export default {
   <div>
     <ContentHead>
       <h2>
-        All Processes
+        My Application
       </h2>
     </ContentHead>
     <ContentMain>
-      <ProcessComponent v-for="process in processes" :key="process.id" :process="process"/>
+      <b>Console</b>
+      <ConsoleComponent></ConsoleComponent>
     </ContentMain>
   </div>
 </template>
