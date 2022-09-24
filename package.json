@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "start": "npm run app:build && npm run srv:start",
     "srv:start": "tsc && node --enable-source-maps dist-srv/index.js",
     "app:dev": "vite",
     "app:build": "vite build",
