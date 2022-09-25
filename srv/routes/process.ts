@@ -10,19 +10,16 @@ router.get('/all', async (req: Request, res: Response) => {
     res.json(await getRuntimeProcessList())
 })
 
-router.use(async (req: Request, res: Response, next: NextFunction) => {
+router.use('/:name/*', async (req: Request, res: Response, next: NextFunction) => {
     // check if process exists
-    const processName = req.params.processName
-    if(!processName) return
-    if(!await getProcessInfo(processName)) {
-        return apiError(req, res, 404, 'Process not found')
+    const name = req.params.name
+    if(!name) next()
+    if(!await getProcessInfo(name)) {
+        apiError(req, res, 404, 'Process not found')
     }
+    next()
 })
 
-router.get('/:name', async (req: Request, res: Response) => {
-    const { name } = req.params
-    res.json(await getProcessInfo(name))
-})
 
 router.post('/:name/edit', async (req, res) => {
     try {        
@@ -35,22 +32,22 @@ router.post('/:name/edit', async (req, res) => {
                     type: 'string'
                 }
             }
-        )
-
-        if (!Object.keys(data).length) return apiError(req, res, 400, "No valid fields provided")
-
-        const newName = data.name
-
-        await renameProcess(name, newName)
-
-        res.json(await getProcessInfo(newName))
-    } catch (e) {
-        console.error(e)
-        if (e instanceof TypeError && e.message.startsWith('Field')) return apiError(req, res, 400, e.message)
-        else return apiError(req, res, 500, 'Internal Server Error')
-    }
-})
-
+            )
+            
+            if (!Object.keys(data).length) return apiError(req, res, 400, "No valid fields provided")
+            
+            const newName = data.name
+            
+            await renameProcess(name, newName)
+            
+            res.json(await getProcessInfo(newName))
+        } catch (e) {
+            console.error(e)
+            if (e instanceof TypeError && e.message.startsWith('Field')) return apiError(req, res, 400, e.message)
+            else return apiError(req, res, 500, 'Internal Server Error')
+        }
+    })
+    
 router.patch('/:name/runconfig', async (req, res) => {
     try {        
         const data = validateRequestBody<RuntimeConfigData>(
@@ -63,30 +60,30 @@ router.patch('/:name/runconfig', async (req, res) => {
                     type: 'boolean'
                 }
             }
-        )
-
-        if (!Object.keys(data).length) return apiError(req, res, 400, "No valid fields provided")
-        
-
-        console.log(data)
-
-        if (data.hasOwnProperty('enabled')) {
-            await setEnabled(req.params.name, data.enabled)
-        }
-
+            )
+            
+            if (!Object.keys(data).length) return apiError(req, res, 400, "No valid fields provided")
+            
+            
+            console.log(data)
+            
+            if (data.hasOwnProperty('enabled')) {
+                await setEnabled(req.params.name, data.enabled)
+            }
+            
         if (data.hasOwnProperty('autorestart')) {
             //TODO: body.autorestart will not work as jand deems it invalid
             //await setProcessProperty(req.params.name, 'AutoRestart', data.autorestart.toString())
         }
-
+        
         res.json(await getProcessInfo(req.params.name))
-
+        
     } catch (e) {
         console.error(e)
         if (e instanceof TypeError && e.message.startsWith('Field')) return apiError(req, res, 400, e.message)
         else return apiError(req, res, 500, 'Internal Server Error')
     }
-
+    
 })
 
 //stop a process
@@ -108,4 +105,9 @@ router.post('/:name/restart', async (req, res) => {
         console.error(e)
         return apiError(req, res, 500, 'Internal Server Error')
     }
+})
+
+router.get('/:name/', async (req: Request, res: Response) => {
+    const { name } = req.params
+    res.json(await getProcessInfo(name))
 })
