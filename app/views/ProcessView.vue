@@ -7,6 +7,7 @@ import Card from '../components/Common/Card.vue';
 import Card1 from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import { restartProcess } from 'jand-ipc';
+import Loading from '../components/Common/Loading.vue';
 
 export default {
   name: 'ProcessView',
@@ -17,8 +18,9 @@ export default {
     ProcessComponent,
     Card,
     Card1,
-    Button
-  },
+    Button,
+    Loading
+},
   data() {
     return {
       process: {
@@ -26,13 +28,14 @@ export default {
         Filename: '',
         Arguments: []
       },
+      loading: false,
     }
   },
   mounted() {
     this.syncProcessInfo()
   },
   methods: {
-    syncProcessInfo() {
+    async syncProcessInfo() {
       //strip the path from the filename
       this.$client.getProcess(this.$route.params.name).then((process) => {
         this.process = process;
@@ -41,13 +44,23 @@ export default {
     },
 
     restartProcess() {
+      this.loading = true;
       this.$client.restartProcess(this.$route.params.name).then(() => {
         this.syncProcessInfo()
-      });
+        setTimeout(async () => {
+          await this.syncProcessInfo()
+          this.loading = false;
+        }, 3000);
+      }).catch(() => {
+        this.loading = false;
+      })
     },
+
     stopProcess() {
+      this.loading = true;
       this.$client.stopProcess(this.$route.params.name).then(() => {
         this.syncProcessInfo()
+        this.loading = false;
       });
     },
   }
@@ -60,10 +73,11 @@ export default {
       <div class="header-grid">
         <h2>
           {{ process.Name }}
+          <Loading v-if="this.loading"></Loading>
         </h2>
         <div>
-          <Button type="primary" @click="restartProcess()">{{ process.Running ? 're' : '' }}start</Button>
-          <Button type="danger" @click="stopProcess()" :disabled="!process.Running">stop</Button>
+          <Button type="primary" @click="restartProcess()" :disabled="this.loading">{{ process.Running ? 're' : '' }}start</Button>
+          <Button type="danger" @click="stopProcess()" :disabled="!process.Running || this.loading">stop</Button>
         </div>
       </div>
     </ContentHead>
