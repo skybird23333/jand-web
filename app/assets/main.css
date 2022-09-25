@@ -302,14 +302,6 @@ body {
   padding: 10px;
 }
 
-@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-  .navbar {
-      background: none;
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-  }
-}
-
 .navbar-links {
   list-style-type: none;
   margin: 0;

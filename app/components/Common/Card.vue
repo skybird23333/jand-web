@@ -30,3 +30,9 @@ export default {
     }
 };
 </script>
+
+<style>
+    .card-header {
+        margin-bottom: 0;
+    }
+</style>

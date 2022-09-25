@@ -40,26 +40,28 @@ export default {
 
 
     <div class="info-grid">
-            <span class="working-directory">
-                {{ process.WorkingDirectory }}
-            </span>
+      <span class="working-directory">
+        {{ process.WorkingDirectory }}
+      </span>
       <div style="display: block;">
-                <span class="label" v-if="process.ProcessId != -1">
-                    PID {{ process.ProcessId }}
-                </span>
+        <span class="label" v-if="process.ProcessId != -1">
+          PID {{ process.ProcessId }}
+        </span>
+        <span class="label" v-if="!process.AutoRestart">
+          Auto restart OFF
+        </span>
+        <span class="label" v-if="!process.Enabled">
+          Disabled
+        </span>
         <span class="label">
-                    Auto restart {{ process.AutoRestart ? 'enabled' : 'disabled' }}
-                </span>
-        <span class="label">
-                    Restarted {{ process.RestartCount }} times
-                </span>
+          {{ process.RestartCount }} restarts
+        </span>
       </div>
     </div>
   </Card>
 </template>
 
 <style scoped>
-
 .process {
   transition: border-color 0.2s, background-color 0.2s;
   filter: drop-shadow(1px 1px 8px black);

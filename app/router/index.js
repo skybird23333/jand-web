@@ -10,7 +10,7 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: '/process/:id',
+            path: '/process/:name',
             name: 'process',
             component: () => import('../views/ProcessView.vue')
         }
