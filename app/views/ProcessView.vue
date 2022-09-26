@@ -8,7 +8,6 @@ import Card1 from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import { restartProcess } from 'jand-ipc';
 import Loading from '../components/Common/Loading.vue';
-import ContentSidebar from '../components/Common/ContentSidebar.vue';
 
 export default {
   name: 'ProcessView',
@@ -20,8 +19,7 @@ export default {
     Card,
     Card1,
     Button,
-    Loading,
-    ContentSidebar
+    Loading
 },
   data() {
     return {
