@@ -7,9 +7,9 @@
     <div class="navbar">
       <div class="navbar-content">
         <span class="site-name">
-          <a href="/">
+          <RouterLink to="/">
             jand-web
-          </a>
+          </RouterLink>
         </span>
       </div>
     </div>
