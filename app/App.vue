@@ -1,4 +1,5 @@
 <script setup>
+  import CustomNotifications from './components/Notification/CustomNotifications.vue';
 </script>
 
 <template>
@@ -12,6 +13,8 @@
         </span>
       </div>
     </div>
+
+    <CustomNotifications />
 
     <div class="content">
       <RouterView></RouterView>

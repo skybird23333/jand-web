@@ -8,6 +8,7 @@ import Card1 from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import { restartProcess } from 'jand-ipc';
 import Loading from '../components/Common/Loading.vue';
+import ContentSidebar from '../components/Common/ContentSidebar.vue';
 
 export default {
   name: 'ProcessView',
@@ -19,7 +20,8 @@ export default {
     Card,
     Card1,
     Button,
-    Loading
+    Loading,
+    ContentSidebar
 },
   data() {
     return {
@@ -29,15 +31,17 @@ export default {
         Arguments: []
       },
       loading: false,
+      status: 'none'
     }
   },
-  mounted() {
-    this.syncProcessInfo()
+  async mounted() {
+    await this.syncProcessInfo()
+    this.status = this.process.Running ? 'running' : 'stopped'
   },
   methods: {
     async syncProcessInfo() {
       //strip the path from the filename
-      this.$client.getProcess(this.$route.params.name).then((process) => {
+      await this.$client.getProcess(this.$route.params.name).then((process) => {
         this.process = process;
         this.process.Filename = this.process.Filename.replace(this.process.WorkingDirectory, '')
       });
@@ -45,22 +49,54 @@ export default {
 
     restartProcess() {
       this.loading = true;
+      this.status = 'starting'
       this.$client.restartProcess(this.$route.params.name).then(() => {
         this.syncProcessInfo()
+        this.$notify({
+          title: "Restarting process",
+          text: "Verifying process is running",
+          type: 'info',
+        })
         setTimeout(async () => {
           await this.syncProcessInfo()
+          this.status = this.process.Running ? 'running' : 'stopped'
+          if (this.process.Running) {
+            this.$notify({
+              title: "Restart successful",
+              text: "Process restarted successfully",
+              type: 'success'
+            })
+          } else {
+            this.$notify({
+              title: "Restart failed",
+              text: "Process was unable to restart",
+              type: 'error'
+            })
+          }
           this.loading = false;
-        }, 3000);
+        }, 2000);
       }).catch(() => {
+        this.$notify({
+          title: "Restart failed",
+          text: "An error occured",
+          type: 'error'
+        })
         this.loading = false;
+        this.status = 'stopped'
       })
     },
-
+    
     stopProcess() {
       this.loading = true;
       this.$client.stopProcess(this.$route.params.name).then(() => {
         this.syncProcessInfo()
+        this.status = 'stopped'
         this.loading = false;
+        this.$notify({
+          title: "Process stopped",
+          text: "Process stopped successfully",
+          type: 'success'
+        })
       });
     },
   }
@@ -69,7 +105,7 @@ export default {
 
 <template>
   <div>
-    <ContentHead :class="this.process.Running ? 'running' : 'stopped'">
+    <ContentHead :class="this.status">
       <div class="header-grid">
         <h2>
           {{ process.Name }}
@@ -133,6 +169,10 @@ export default {
 
 .running {
   background: linear-gradient(rgba(0, 255, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.starting {
+  background: linear-gradient(rgba(0, 0, 255, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .stopped {
