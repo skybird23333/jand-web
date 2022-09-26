@@ -2,25 +2,31 @@
 import ContentHead from '../components/Common/ContentHead.vue';
 import ContentMain from '../components/Common/ContentMain.vue';
 import ProcessComponent from '../components/Home/ProcessComponent.vue';
+import Loading from '../components/Common/Loading.vue';
 
 export default {
   name: 'HomeView',
   components: {
     ContentHead,
     ContentMain,
-    ProcessComponent
-  },
+    ProcessComponent,
+    Loading
+},
   data() {
     return {
-      processes: []
+      processes: [],
+      loading: false
     }
   },
   mounted() {
     this.fetchProcesses();
+    setInterval(this.fetchProcesses, 5000);
   },
   methods: {
     async fetchProcesses() {
+      this.loading = true;
       this.processes = await this.$client.getAllProcess()
+      this.loading = false;
     }
   }
 }
@@ -31,6 +37,7 @@ export default {
     <ContentHead>
       <h2>
         All Processes
+        <Loading v-if="loading"/>
       </h2>
     </ContentHead>
     <ContentMain>
