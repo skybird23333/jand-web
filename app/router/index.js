@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ProcessView from '../views/ProcessView.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +13,7 @@ const router = createRouter({
         {
             path: '/process/:name',
             name: 'process',
-            component: () => import('../views/ProcessView.vue')
+            component: ProcessView
         }
     ]
 })
