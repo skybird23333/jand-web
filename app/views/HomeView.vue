@@ -15,12 +15,16 @@ export default {
   data() {
     return {
       processes: [],
-      loading: false
+      loading: false,
+      interval: 0
     }
   },
   mounted() {
     this.fetchProcesses();
-    setInterval(this.fetchProcesses, 5000);
+    this.interval = setInterval(this.fetchProcesses, 5000);
+  },
+  unmounted() {
+    clearInterval(this.interval);
   },
   methods: {
     async fetchProcesses() {
