@@ -5,7 +5,7 @@
 
 <script>
 export default {
-    name: 'Input',
+    name: 'InputComponent',
     props: ['modelValue', 'placeholder', 'type', 'disabled', 'required'],
     emits: ['update:modelValue'],
 };

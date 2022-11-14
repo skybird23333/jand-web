@@ -3,18 +3,18 @@
     <div class="logview" ref="logview">
       <ConsoleLineComponent v-for="line in lines" :type="line.type" :key="line.text">{{ line.text }}</ConsoleLineComponent>
     </div>
-    <Input placeholder="Send something to stdin..." v-model="input" @keydown="handleSend"></Input>
+    <InputComponent placeholder="Send something to stdin..." v-model="input" @keydown="handleSend"></InputComponent>
   </Card>
 </template>
 
 <script>
 import ConsoleLineComponent from "./ConsoleLineComponent.vue";
 import Card from "../Common/Card.vue";
-import Input from "../Common/Input.vue";
+import InputComponent from "../Common/InputComponent.vue";
 
 export default {
   name: "ConsoleComponent",
-  components: { ConsoleLineComponent, Card, Input },
+  components: { ConsoleLineComponent, Card, InputComponent },
   data() {
     return {
       lines: [
