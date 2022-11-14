@@ -21,6 +21,7 @@
     "express": "^4.18.1",
     "express-history-api-fallback": "^2.2.1",
     "jand-ipc": "github:skybird23333/jand-ipc#main",
+    "lodash-es": "^4.17.21",
     "morgan": "^1.10.0",
     "tailing-stream": "^0.2.0",
     "typescript": "^4.8.3",
