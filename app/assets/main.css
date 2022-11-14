@@ -5,13 +5,12 @@
   border: 1px solid var(--foreground-border);
   margin: 10px;
   padding: 10px;
-  border-radius: 4px;
   height: auto;
 }
 
-/* Adding a background to the card with the secondary background color. */
+/* Adding a background to the card with the tertiary background color. */
 .card.background {
-  background: var(--background-secondary);
+  background: var(--background-tertiary);
 }
 
 /* Lists are moved left in cards to make it appear more compact. */
@@ -41,14 +40,12 @@
 }
 
 .card .card-header {
-  font-size: 1.2em;
   font-weight: bold;
-  margin-bottom: 0.5em;
+  padding-bottom: 0.25em;
 }
 
 .card .card-footer {
   font-size: 0.8em;
-  font-style: italic;
   margin-top: 0.5em;
   color: var(--foreground-secondary);
 }
@@ -62,6 +59,7 @@
   box-shadow: none;
   padding: 7px;
   border-radius: 4px;
+  margin: 2px;
   border: 1px solid var(--foreground-border);
   outline: none;
   display: inline-block;
@@ -137,7 +135,7 @@
 
 /* INPUT */
 .input {
-  background-color: var(--background-tertiary);
+  background-color: var(--background-primary);
   color: var(--foreground-primary);
   box-shadow: none;
   padding: 7px;
@@ -148,15 +146,9 @@
   transition: filter 0.4s, border-color 0.4s;
 }
 
-.input.hollow {
-  background: none;
-  border: 1px solid var(--foreground-border);
-}
-
 .input.error {
   border: 1px solid var(--red);
 }
-
 
 .input:hover,
 .input:focus{
@@ -187,45 +179,50 @@
   text-decoration: underline;
 }
 
+/* SMALL CODE */
+code {
+  background-color: var(--background-primary);
+  padding: 4px;
+  border-radius: 4px;
+}
 
 /* CODE BLOCK */
 pre {
-  background-color: var(--background-secondary);
-  border: 2px solid var(--foreground-border);
-  border-radius: 4px;
+  background-color: var(--background-primary);
+  border-left: 5px solid var(--foreground-border);
   padding: 10px;
   color: var(--foreground-primary);
 }
 
+
 /* QUOTE AND INFORMATION */
 .quote,
 .alert p,
-.alert.info p,
-.alert.warn p,
-.alert.error p {
+.info p,
+.warn p,
+.success p,
+.error p {
   background: var(--background-primary);
-  border: 1px solid var(--foreground-secondary);
-  border-radius: 4px;
-  margin: 1.5em 10px;
   padding: 0.5em 10px;
+  border-left: 5px solid;
 }
 
-.alert.info p {
+.info p {
   background-color: var(--blue);
   border-color: #0077ff;
 }
 
-.alert.warn p {
+.warn p {
   background-color: var(--yellow);
   border-color: #efbf00;
 }
 
-.alert.error p {
+.error p {
   background-color: var(--red);
   border-color: #bc0000;
 }
 
-.alert.success p {
+.success p {
   background-color: var(--green);
   border-color: #00e600;
 }
@@ -242,7 +239,6 @@ th, td {
   border: 1px solid var(--foreground-border);
   padding: 5px;
 }
-
 /*--background-primary: rgb(49, 49, 49);  Content & navbar background */
 /* --background-secondary: #161616;  The background behind content */
 /* --foreground-secondary:rgb(235, 235, 235);  Secondary text but not used */
@@ -295,11 +291,19 @@ body {
   z-index: 123435589;
   width: 100%;
   box-shadow: 0 -1px 8px 0px black;
-  position: absolute;
+  position: fixed;
 }
 
 .navbar-content {
   padding: 10px;
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .navbar {
+      background: none;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+  }
 }
 
 .navbar-links {
@@ -322,13 +326,13 @@ body {
 .content-header {
   margin-block-start: 0;
   padding: 20px 20px;
-  background-color: var(--background-primary);
   padding-top: 75px;
   border-bottom: 1px solid var(--foreground-border);
+      background-color: var(--background-tertiary);
 }
 
 .content-header h1 {
-  font-size: 45px;
+  font-size: 30px;
 }
 
 .content-content h1 {
@@ -336,7 +340,7 @@ body {
 }
 
 .content-header h3 {
-  color: var(--foreground-primary);
+  color: var(--foreground-secondary);
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
       "Lucida Sans", Arial, sans-serif;
 }
@@ -353,10 +357,9 @@ h3 {
   max-width: 50%;
   min-width: 1000px;
   margin: auto;
-  background-color: var(--background-primary);
+  background-color: var(--background-secondary);
   z-index: -1000;
   position: relative;
-  border: 1px solid var(--foreground-border);
   border-top: none;
   padding-bottom: 50px;
 }
@@ -373,21 +376,35 @@ h3 {
   .content-header h1 {
       font-size: xx-large;
   }
+
+  .side-contents + .content .content-header {
+      padding-top: 10px;
+  }
 }
 
 .content-content {
   padding: 25px;
   padding-top: 10px;
   color: var(--foreground-primary);
+  font-size: large;
+}
+
+
+
+.content-content h1,
+.content-content h2,
+.content-content h3,
+.content-content h4,
+.content-content h5,
+.content-content h6 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .content-content h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+.content-header h1 {
+  border-bottom: 1px solid var(--foreground-border);
+  padding-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .site-name a {
@@ -529,13 +546,12 @@ h6 {
 
 .form {
   display: grid;
-  margin: 12px;
 }
 
 .label {
-  background-color: var(--background-tertiary);
+  border: 1px solid var(--foreground-border);
   margin: 2px;
-  padding: 4px;
+  padding: 2px;
   border-radius: 4px;
 }
 
@@ -568,10 +584,11 @@ h6 {
   overflow-x: hidden;
   padding: 20px;
   padding-top: 80px;
+  border-right: 1px solid var(--foreground-border);
 }
 
 .side-contents * {
-  margin: 6px;
+  padding: 6px;
 }
 
 .side-contents a {
@@ -600,7 +617,8 @@ h6 {
       position: relative;
       z-index: 1;
       margin: auto;
-      background-color: var(--background-secondary);
+      padding: none;
+      background-color: var(--background-primary);
       overflow-x: hidden;
       padding-top: 80px;
       left: 0;
@@ -609,7 +627,6 @@ h6 {
   .side-contents a {
       color: var(--foreground-primary);
       display: block;
-      padding: 6px;
       font-size: larger;
       text-decoration: none;
       transition: filter .4s;
@@ -622,66 +639,8 @@ h6 {
   }
 }
 
-
-/* TODO: Think of a better solution to integrate with components-style.css */
-.info p,
-.warn p,
-.error p {
-  background: var(--background-primary);
-  border: 1px solid var(--foreground-secondary);
-  border-radius: 4px;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-
-.info p {
-  background-color: var(--blue);
-  border-color: #0077ff;
-}
-
-.warn p {
-  background-color: var(--yellow);
-  border-color: #efbf00;
-}
-
-.error p {
-  background-color: var(--red);
-  border-color: #bc0000;
-}
-
-.success p {
-  background-color: var(--green);
-  border-color: #00e600;
-}
-
 .tag {
-  border: 2px solid var(--foreground-primary);
-  background-blend-mode: multiply;
-  width: max-content;
-  height: min-content;
-  border-radius: 3px;
-  padding: 3px;
-  font-weight: bold;
-  margin: 3px;
-}
-
-.tag.success {
-  border-color: var(--green);
-  color: var(--green);
-}
-
-.tag.disabled {
-  border-color: var(--foreground-secondary);
-  color: var(--foreground-secondary);
-}
-
-.tag.error {
-  border-color: var(--red);
-  color: var(--red);
-}
-
-.code {
-  background-color: var(--background-secondary);
-  padding: 5px;
-  border-radius: 5px;
+  background-color: var(--background-tertiary);
+  margin: 0 2px;
+  padding: 1px 6px;
 }
