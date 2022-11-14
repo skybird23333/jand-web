@@ -34,7 +34,6 @@ export default {
       <b>{{ process.Name }}</b>
       <code class="code">
         {{ process.Filename }}
-        {{ process.Arguments.join(' ') }}
       </code>
     </template>
 

@@ -6,7 +6,6 @@ import ConsoleComponent from "../components/Console/ConsoleComponent.vue";
 import Card from '../components/Common/Card.vue';
 import Card1 from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
-import { restartProcess } from 'jand-ipc';
 import Loading from '../components/Common/Loading.vue';
 
 export default {
@@ -123,8 +122,8 @@ export default {
             <b>
               {{ process.Filename }}
             </b>
-            <code>
-                <span v-for="arg in process.Arguments" :key="arg">
+            <code v-for="arg in process.Arguments" :key="arg">
+                <span>
                   {{ arg }}
                 </span>
               </code>
@@ -158,7 +157,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .command b {
   margin-right: 10px;
   font-size: large;
@@ -195,11 +194,12 @@ export default {
   background-size: 100% 130%;
   animation: background 5s ease infinite;
 }
-.command code span {
-  background: var(--background-tertiary);
+
+.command code {
   padding: 5px;
   border-radius: 4px;
   margin-right: 3px;
+  border: 1px solid var(--foreground-border);
 }
 
 .header-grid {
