@@ -1,20 +1,20 @@
 import { apiError } from "../modules/apiError"
 import validateRequestBody from "../utils/validate-request-body"
 import { NextFunction, Request, Response, Router } from "express"
-import { getProcessInfo, getRuntimeProcessList, renameProcess, restartProcess, setEnabled, setProcessProperty, stopProcess } from "jand-ipc"
 import { RenameProcessData, RuntimeConfigData } from "srv/typings/interfaces"
+import { jandClient } from "../modules/jandClient"
 
 export const router = Router()
 
 router.get('/all', async (req: Request, res: Response) => {
-    res.json(await getRuntimeProcessList())
+    res.json(await jandClient.getRuntimeProcessList())
 })
 
 router.use('/:name/*', async (req: Request, res: Response, next: NextFunction) => {
     // check if process exists
     const name = req.params.name
     if(!name) next()
-    if(!await getProcessInfo(name)) {
+    if(!await jandClient.getProcessInfo(name)) {
         apiError(req, res, 404, 'Process not found')
     }
     next()
@@ -38,9 +38,9 @@ router.post('/:name/edit', async (req, res) => {
             
             const newName = data.name
             
-            await renameProcess(name, newName)
+            await jandClient.renameProcess(name, newName)
             
-            res.json(await getProcessInfo(newName))
+            res.json(await jandClient.getProcessInfo(newName))
         } catch (e) {
             console.error(e)
             if (e instanceof TypeError && e.message.startsWith('Field')) return apiError(req, res, 400, e.message)
@@ -68,7 +68,7 @@ router.patch('/:name/runconfig', async (req, res) => {
             console.log(data)
             
             if (data.hasOwnProperty('enabled')) {
-                await setEnabled(req.params.name, data.enabled)
+                await jandClient.setEnabled(req.params.name, data.enabled)
             }
             
         if (data.hasOwnProperty('autorestart')) {
@@ -76,7 +76,7 @@ router.patch('/:name/runconfig', async (req, res) => {
             //await setProcessProperty(req.params.name, 'AutoRestart', data.autorestart.toString())
         }
         
-        res.json(await getProcessInfo(req.params.name))
+        res.json(await jandClient.getProcessInfo(req.params.name))
         
     } catch (e) {
         console.error(e)
@@ -89,8 +89,8 @@ router.patch('/:name/runconfig', async (req, res) => {
 //stop a process
 router.post('/:name/stop', async (req, res) => {
     try {
-        await stopProcess(req.params.name)
-        res.json(await getProcessInfo(req.params.name))
+        await jandClient.stopProcess(req.params.name)
+        res.json(await jandClient.getProcessInfo(req.params.name))
     } catch (e) {
         console.error(e)
         return apiError(req, res, 500, 'Internal Server Error')
@@ -99,8 +99,8 @@ router.post('/:name/stop', async (req, res) => {
 
 router.post('/:name/restart', async (req, res) => {
     try {
-        await restartProcess(req.params.name)
-        res.json(await getProcessInfo(req.params.name))
+        await jandClient.restartProcess(req.params.name)
+        res.json(await jandClient.getProcessInfo(req.params.name))
     } catch (e) {
         console.error(e)
         return apiError(req, res, 500, 'Internal Server Error')
@@ -109,5 +109,5 @@ router.post('/:name/restart', async (req, res) => {
 
 router.get('/:name/', async (req: Request, res: Response) => {
     const { name } = req.params
-    res.json(await getProcessInfo(name))
+    res.json(await jandClient.getProcessInfo(name))
 })
