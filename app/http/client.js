@@ -25,4 +25,10 @@ export default class Client {
     async restartProcess(name) {
         return await this.rest.post(`/process/${name}/restart`)
     }
+
+    async checkDirectoryWritable(path) {
+        return await this.rest.post(`/create/checkdir/`, {
+            dir: path
+        })
+    }
 }
