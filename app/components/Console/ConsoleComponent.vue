@@ -15,6 +15,7 @@ import InputComponent from "../Common/InputComponent.vue";
 export default {
   name: "ConsoleComponent",
   components: { ConsoleLineComponent, Card, InputComponent },
+  props: [ 'name' ],
   data() {
     return {
       lines: [],
@@ -28,9 +29,10 @@ export default {
         this.$refs.logview.scrollTop = this.$refs.logview.scrollHeight;
       });
     },
-    handleSend(evt) {
+    async handleSend(evt) {
       if (evt.keyCode !== 13) return
       if (this.input === "") return;
+      this.$client.sendToProcessStdin(this.name, this.input);
       this.pushLog({
         type: "stdin",
         text: this.input,

@@ -164,7 +164,7 @@ export default {
         </span>
       </Card>
       <b>Console</b>
-      <ConsoleComponent ref="console"></ConsoleComponent>
+      <ConsoleComponent ref="console" :name="process.Name"></ConsoleComponent>
     </ContentMain>
   </div>
 </template>

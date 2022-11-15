@@ -35,4 +35,10 @@ export default class Client {
     startLogStream(name) {
         return new EventSource(this.rest.baseURL + `/console/${name}/event` );
     }
+
+    async sendToProcessStdin(name, data) {
+        return await this.rest.post(`/console/${name}/send`, {
+            data
+        })
+    }
 }
