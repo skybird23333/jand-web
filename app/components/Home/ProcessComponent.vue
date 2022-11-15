@@ -14,10 +14,18 @@ export default {
       color: 'blue'
     }
   },
+  updated() {
+    this.initialize()
+  },
   mounted() {
-    this.determineColor()
+    this.initialize()
   },
   methods: {
+    initialize() {
+      this.determineColor()
+      //strip directory from filename
+      this.process.Filename = this.process.Filename.replace(this.process.WorkingDirectory, '')
+    },
     determineColor() {
       this.process.Running ? this.$data.color = 'green' : this.$data.color = 'red'
     },
