@@ -9,6 +9,7 @@ const streamManager = new ConsoleLogStreamManager()
 
 router.get('/:name/event', function (req, res) {
     //FIXME: doesnt work when multiple logs, need to fix jand-ipc
+    if(!jandClient.getProcessInfo(req.params.name)) return apiError(req, res, 404, 'Process not found')
 
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
@@ -21,7 +22,8 @@ router.get('/:name/event', function (req, res) {
     streamManager.addLogStream(res, req.params.name)
 })
 
-router.post('/console/:name/send', async function (req, res, next) {
+router.post('/:name/send', async function (req, res, next) {
+    if(!jandClient.getProcessInfo(req.params.name)) return apiError(req, res, 404, 'Process not found')
     if (!req.body.data) return apiError(req, res, 400, 'No data provided')
     await jandClient.sendProcessStdinLine(req.params.name, req.body.data)
     res.status(204).send()
