@@ -21,11 +21,11 @@ class ConsoleLogStreamManager {
     private handleLogEvent(data: any) {
         this.streams.map((stream) => {
             if (stream.procname === data.Process) {
-                stream.res.write(JSON.stringify({
+                stream.res.write("data:" + JSON.stringify({
                     data: data.Value,
                     type: (data.Type === 'errlog') ? 'stderr' : 'stdout',
                     time: Date.now()
-                }))
+                }) + "\n\n")
             }
         })
     }
