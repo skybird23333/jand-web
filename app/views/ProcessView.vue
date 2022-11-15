@@ -7,6 +7,7 @@ import Card from '../components/Common/Card.vue';
 import Card1 from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import Loading from '../components/Common/Loading.vue';
+import Convert from 'ansi-to-html'
 
 export default {
   name: 'ProcessView',
@@ -28,15 +29,26 @@ export default {
         Arguments: []
       },
       loading: false,
-      status: 'none'
+      status: 'none',
+      stream: null
     }
   },
   async mounted() {
     await this.syncProcessInfo()
     this.status = this.process.Running ? 'running' : 'stopped'
+    this.stream = this.$client.startLogStream(this.process.Name)
+    const convert = new Convert()
+    this.stream.onmessage = (e) => {
+      try {
+        const data = JSON.parse(e.data)
+        this.$refs.console.append(convert.toHtml(data.data), data.type) 
+      } catch (e) {
+        console.log(e)
+      }
+    }
   },
   methods: {
-    async syncProcessInfo() {
+    async syncProcessInfo() { 
       //strip the path from the filename
       await this.$client.getProcess(this.$route.params.name).then((process) => {
         this.process = process;
@@ -152,7 +164,7 @@ export default {
         </span>
       </Card>
       <b>Console</b>
-      <ConsoleComponent></ConsoleComponent>
+      <ConsoleComponent ref="console"></ConsoleComponent>
     </ContentMain>
   </div>
 </template>

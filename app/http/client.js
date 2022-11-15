@@ -31,4 +31,8 @@ export default class Client {
             dir: path
         })
     }
+
+    startLogStream(name) {
+        return new EventSource(this.rest.baseURL + `/console/${name}/event` );
+    }
 }

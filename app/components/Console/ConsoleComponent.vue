@@ -1,7 +1,7 @@
 <template>
   <Card background>
     <div class="logview" ref="logview">
-      <ConsoleLineComponent v-for="line in lines" :type="line.type" :key="line.text">{{ line.text }}</ConsoleLineComponent>
+      <ConsoleLineComponent v-for="line in lines" :type="line.type" :key="line.text" v-html="line.text"></ConsoleLineComponent>
     </div>
     <InputComponent placeholder="Send something to stdin..." v-model="input" @keydown="handleSend"></InputComponent>
   </Card>
@@ -17,28 +17,17 @@ export default {
   components: { ConsoleLineComponent, Card, InputComponent },
   data() {
     return {
-      lines: [
-        {
-          type: "stdout",
-          text: "Compiling...",
-        },
-        {
-          type: "stdout",
-          text: "Ready! App is listening on localhost:3000",
-        },
-        {
-          type: "stdin",
-          text: "help",
-        },
-        {
-          type: "stderr",
-          text: "ERR: Cmd not found",
-        },
-      ],
+      lines: [],
       input: ""
     }
   },
   methods: {
+    append(line, type) {
+      this.lines.push({ text: line, type: type });
+      this.$nextTick(() => {
+        this.$refs.logview.scrollTop = this.$refs.logview.scrollHeight;
+      });
+    },
     handleSend(evt) {
       if (evt.keyCode !== 13) return
       if (this.input === "") return;
