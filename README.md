@@ -18,10 +18,24 @@ cd jand-web && jand start jand-web "npm run start"
 (In future versions) jand-web will auto detect whether it is being run under JanD and will exclude itself from the processes list.
 
 # Roadmap
-- [x] Getting the server running
-- [x] Getting it to display stuff
-- [ ] Control processes
-- [ ] Add new process
-- [ ] Clone repo from github and add to process
-- [ ] Edit process
-- [ ] Profit?
+
+* Stage 1: Basic JanD Features
+  - [x] Viewing processes information
+  - [x] Restarting/stopping processes
+  - [ ] Creating new process on existing dir
+  - [x] Viewing the processes logs
+  - [ ] Viewing the processes historical logs
+  - [x] Sending stuff to process stdin
+  - [ ] Changing processes launch config(command, dir, etc)
+  - [ ] Saving the list
+  - [ ] Deleting processes
+* Stage 2: User & permissions
+  - [ ] User
+  - [ ] Permissions
+  - [ ] Registeration?
+* Stage 3: Automation/Deployment
+  - [ ] Deploy from Github w oauth2(maybe)/git url
+  - [ ] Run tasks before/after deploy
+* Stage 4: Extensions
+  - [ ] The api
+  - [ ] Example extension: BDS Config editor
