@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, nextTick } from 'vue'
 import App from './App.vue'
 import router from './router'
 import Client from './http/client'
@@ -8,8 +8,18 @@ import './assets/main.css'
 
 const app = createApp(App)
 
+const client = new Client()
+
+//display machine name in title
+async function fetchMachineName() {
+    const title = `jand-web ${(await client.getSystemInfo()).hostname}`;
+    document.title = title;
+}
+
+fetchMachineName()
+
 app.use(router)
 app.use(Notifications)
 
-app.config.globalProperties.$client = new Client()
+app.config.globalProperties.$client = client
 app.mount('#app')

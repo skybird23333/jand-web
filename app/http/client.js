@@ -36,6 +36,10 @@ export default class Client {
         return new EventSource(this.rest.baseURL + `/console/${name}/event` );
     }
 
+    async getSystemInfo() {
+        return await this.rest.get(`/daemon/system`)
+    }
+
     async sendToProcessStdin(name, data) {
         return await this.rest.post(`/console/${name}/send`, {
             data
