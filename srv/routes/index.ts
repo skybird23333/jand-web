@@ -12,6 +12,7 @@ apiRouter.use(cors())
 //TODO: register endpoints
 apiRouter.use('/process', require('./process').router)
 apiRouter.use('/create', require('./create').router)
+apiRouter.use('/daemon', require('./daemon').router)
 apiRouter.use('/console', require('./console').router)
 
 apiRouter.get('/', (req:Request, res:Response) => {
@@ -21,7 +22,7 @@ apiRouter.get('/', (req:Request, res:Response) => {
 apiRouter.all('*', (req:Request, res:Response) => {
     apiError(req, res, 404, 'Endpoint not found')
 })
-
+    
 
 apiRouter.use(function (err:Errback, req:Request, res:Response, next:NextFunction) {
     if (res.headersSent) {

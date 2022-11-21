@@ -1,8 +1,13 @@
-export interface RuntimeConfigData {
+export interface IRuntimeConfigData {
     enabled: boolean
     autorestart: boolean
 }
 
-export interface RenameProcessData {
+export interface IRenameProcessData {
     name: string
+}
+
+export interface IDaemonSystemInfoResponse {
+    hostname: string
+    username: string
 }

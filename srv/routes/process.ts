@@ -1,7 +1,7 @@
 import { apiError } from "../modules/apiError"
 import validateRequestBody from "../utils/validate-request-body"
 import { NextFunction, Request, Response, Router } from "express"
-import { RenameProcessData, RuntimeConfigData } from "srv/typings/interfaces"
+import { IRenameProcessData, IRuntimeConfigData } from "srv/typings/interfaces"
 import { jandClient } from "../modules/jandClient"
 
 export const router = Router()
@@ -25,7 +25,7 @@ router.post('/:name/edit', async (req, res) => {
     try {        
         const { name } = req.params
         
-        const data = validateRequestBody<RenameProcessData>(
+        const data = validateRequestBody<IRenameProcessData>(
             req.body,
             {
                 name: {
@@ -50,7 +50,7 @@ router.post('/:name/edit', async (req, res) => {
     
 router.patch('/:name/runconfig', async (req, res) => {
     try {        
-        const data = validateRequestBody<RuntimeConfigData>(
+        const data = validateRequestBody<IRuntimeConfigData>(
             req.body,
             {
                 enabled: {
