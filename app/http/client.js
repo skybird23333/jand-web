@@ -44,6 +44,10 @@ export default class Client {
         return await this.rest.get(`/daemon/status`)
     }
 
+    async saveConfig() {
+        return await this.rest.post(`/daemon/save`)
+    }
+
     async sendToProcessStdin(name, data) {
         return await this.rest.post(`/console/${name}/send`, {
             data

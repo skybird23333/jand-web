@@ -18,3 +18,8 @@ router.get('/system/', async (req: Request, res: Response) => {
     }
     res.json(data)
 })
+
+router.post('/save', async (req: Request, res: Response) => {
+    await jandClient.saveConfig()
+    res.status(204).send()
+})

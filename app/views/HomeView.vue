@@ -5,6 +5,7 @@ import ProcessComponent from '../components/Home/ProcessComponent.vue';
 import Loading from '../components/Common/Loading.vue';
 import Button from '../components/Common/Button.vue';
 import Card from '../components/Common/Card.vue';
+import Alert from '../components/Common/Alert.vue';
 
 export default {
   name: 'HomeView',
@@ -14,7 +15,8 @@ export default {
     ProcessComponent,
     Loading,
     Button,
-    Card
+    Card,
+    Alert
 },
   data() {
     return {
@@ -22,7 +24,8 @@ export default {
       loading: false,
       interval: 0,
       daemon: {
-        Version: ''
+        Version: '',
+        NotSaved: false,
       },
       sysInfo: {
         username: '',
@@ -44,6 +47,12 @@ export default {
       this.daemon = await this.$client.getDaemonStatus()
       this.sysInfo = await this.$client.getSystemInfo()
       this.loading = false;
+    },
+    async onSave() {
+      this.loading = true;
+      await this.$client.saveConfig()
+      this.daemon.NotSaved = false;
+      this.loading = false;
     }
   }
 }
@@ -60,6 +69,13 @@ export default {
         </Button>
       </h2>
       {{ sysInfo.username }}@{{ sysInfo.hostname }} | {{ daemon.Version }}
+
+      <Alert v-if="daemon.NotSaved" type="warn">
+        Your process configuration list is unsaved. Changes made to it will be lost when you restart.
+        <Button type="primary" @click="onSave">
+          Save now
+        </Button>
+      </Alert>
     </ContentHead>
     <ContentMain>
       <ProcessComponent v-for="process in processes" :key="process.id" :process="process"/>
