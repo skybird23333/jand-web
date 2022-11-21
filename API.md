@@ -14,6 +14,7 @@
   - [Save the daemon process list](#save-the-daemon-process-list)
   - [Get the daemon config](#get-the-daemon-config)
   - [Edit the daemon config](#edit-the-daemon-config)
+  - [Get the system information](#get-the-system-information)
 - [Console](#console)
   - [Application log stream](#application-log-stream)
   - [Get application log](#get-application-log)
@@ -137,6 +138,15 @@ Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemon
 **PATCH** `/daemon/config`
 
 For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-ipc#config--object)
+
+## Get the system information
+
+**GET** `/daemon/system`
+
+| Params   | Type   | Description                                              |
+| -------- | ------ | -------------------------------------------------------- |
+| hostname | String | The hostname(machine name) of the current active machine |
+| username | String | The current user name(that is running jand web)          |
 
 # Console
 
