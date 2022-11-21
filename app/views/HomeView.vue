@@ -4,6 +4,7 @@ import ContentMain from '../components/Common/ContentMain.vue';
 import ProcessComponent from '../components/Home/ProcessComponent.vue';
 import Loading from '../components/Common/Loading.vue';
 import Button from '../components/Common/Button.vue';
+import Card from '../components/Common/Card.vue';
 
 export default {
   name: 'HomeView',
@@ -12,13 +13,21 @@ export default {
     ContentMain,
     ProcessComponent,
     Loading,
-    Button
+    Button,
+    Card
 },
   data() {
     return {
       processes: [],
       loading: false,
-      interval: 0
+      interval: 0,
+      daemon: {
+        Version: ''
+      },
+      sysInfo: {
+        username: '',
+        hostname: ''
+      }
     }
   },
   mounted() {
@@ -32,6 +41,8 @@ export default {
     async fetchProcesses() {
       this.loading = true;
       this.processes = await this.$client.getAllProcess()
+      this.daemon = await this.$client.getDaemonStatus()
+      this.sysInfo = await this.$client.getSystemInfo()
       this.loading = false;
     }
   }
@@ -48,6 +59,7 @@ export default {
           New
         </Button>
       </h2>
+      {{ sysInfo.username }}@{{ sysInfo.hostname }} | {{ daemon.Version }}
     </ContentHead>
     <ContentMain>
       <ProcessComponent v-for="process in processes" :key="process.id" :process="process"/>

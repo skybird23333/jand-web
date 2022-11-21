@@ -39,6 +39,10 @@ export default class Client {
     async getSystemInfo() {
         return await this.rest.get(`/daemon/system`)
     }
+    
+    async getDaemonStatus() {
+        return await this.rest.get(`/daemon/status`)
+    }
 
     async sendToProcessStdin(name, data) {
         return await this.rest.post(`/console/${name}/send`, {
