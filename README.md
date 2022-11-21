@@ -1,8 +1,7 @@
 # jand-web
 A web interface for the smash hit [JanD](https://github.com/jan0660/jand).
 
-
-![image](https://user-images.githubusercontent.com/58811224/203070958-c637c5d3-d5f1-44ef-b9e9-834982c03323.png)
+![image](https://user-images.githubusercontent.com/58811224/203071322-5dfc4e01-24f2-4cd6-8171-54aadf213bab.png)
 
 
 # Installing
