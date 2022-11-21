@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "start": "tsc && node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
-    "compile-start": "npm run app:build && npm run srv:start",
+    "start": "node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
+    "build-start": "npm run app:build && npm run srv:start",
+    "build": "npm run app:build && tsc",
     "srv:start": "tsc && node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
     "app:dev": "vite",
     "app:build": "vite build",
