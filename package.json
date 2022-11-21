@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "start": "npm run app:build && npm run srv:start",
-    "srv:start": "tsc && node --enable-source-maps dist-srv/index.js",
+    "start": "tsc && node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
+    "compile-start": "npm run app:build && npm run srv:start",
+    "srv:start": "tsc && node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
     "app:dev": "vite",
     "app:build": "vite build",
     "app:preview": "vite preview --port 4173"
@@ -28,7 +29,8 @@
     "typescript": "^4.8.3",
     "vite": "^3.1.2",
     "vue": "^3.2.39",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "why-is-node-running": "^2.2.2"
   },
   "devDependencies": {
     "@types/morgan": "^1.9.3"
