@@ -63,13 +63,13 @@ export default {
           {{ process.RestartCount }}
         </td>
         <td>
-          <span class="material-icons">
-            {{ process.AutoRestart ? 'done' : '' }}
+          <span class="material-icons" :style="`color: ${process.AutoRestart ? 'green' : 'red'}`">
+            {{ process.AutoRestart ? 'done' : 'dangerous' }}
           </span>
         </td>
         <td>
-          <span class="material-icons">
-            {{ process.Enabled ? 'done' : '' }}
+          <span class="material-icons" :style="`color: ${process.Enabled ? 'green' : 'red'}`">
+            {{ process.Enabled ? 'done' : 'dangerous' }}
           </span>
         </td>
       </tr>

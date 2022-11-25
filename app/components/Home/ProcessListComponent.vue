@@ -1,5 +1,5 @@
 <template>
-    <Tab :data="['card', 'list']" default="list" v-model="options.mode"></Tab>
+    <Tab :data="['card', 'list']" default="card" v-model="options.mode"></Tab>
     <div v-if="options.mode == 'list'">
         <div class="list-header">
             <span class="material-icons">storage</span>
@@ -72,7 +72,7 @@ export default {
     },
     data: () => ({
         options: {
-            mode: 'list' //card or list
+            mode: 'card' //card or list
         },
         processData: [],
     }),
