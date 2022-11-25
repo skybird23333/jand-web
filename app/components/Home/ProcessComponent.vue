@@ -7,11 +7,12 @@ export default {
     Card
   },
   props: [
-    'process'
+    'process',
+    'mode'
   ],
   data() {
     return {
-      color: 'blue'
+      color: 'none'
     }
   },
   updated() {
@@ -32,13 +33,49 @@ export default {
     onClicked() {
       this.$router.push(`/process/${this.process.Name}`)
     }
+  },
+  watch: {
+    mode: function () {
+      this.initialize()
+    }
   }
 }
 </script>
 <template>
-  <Card background :color="color" class="process" @click="onClicked">
-
+    <tr class="process process-list" @click="onClicked" v-if="mode == 'list'">
+        <td :style="`background-color: ${color}`">
+        </td>
+        <td>
+          {{ process.SafeIndex }}
+        </td>
+        <td>
+          <b>{{ process.Name }}</b>
+          <code class="code">
+            <b>
+              {{ process.Filename }}
+            </b>
+          </code>
+        </td>
+        <td>
+          {{ process.ProcessId }}
+        </td>
+        <td>
+          {{ process.RestartCount }}
+        </td>
+        <td>
+          <span class="material-icons">
+            {{ process.AutoRestart ? 'done' : '' }}
+          </span>
+        </td>
+        <td>
+          <span class="material-icons">
+            {{ process.Enabled ? 'done' : '' }}
+          </span>
+        </td>
+      </tr>
+  <Card background :color="color" class="process" @click="onClicked" v-else>
     <template #header>
+      {{ process.SafeIndex }}
       <b>{{ process.Name }}</b>
       <code class="code">
         {{ process.Filename }}
@@ -74,6 +111,14 @@ export default {
   filter: drop-shadow(1px 1px 8px black);
 }
 
+.process-list {
+  transition: border-color 0.2s, background-color 0.2s;
+  padding: 0;
+  padding-left: 0.5em;
+  margin: 0;
+  filter: none;
+}
+
 .process:hover {
   background-color: var(--background-tertiary);
   border-color: var(--foreground-primary);
@@ -90,6 +135,8 @@ export default {
   display: grid;
   grid-template-columns: auto max-content;
 }
+
+/* List grid defined in ProcessListComponent */
 
 .working-directory {
   font-size: small;

@@ -22,6 +22,10 @@
   </div>
 </template>
 
-<style scoped>
+<style>
+
+.material-icons {
+    vertical-align: bottom;
+}
 
 </style>
