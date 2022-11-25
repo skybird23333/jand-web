@@ -27,11 +27,14 @@ export default {
     },
     updated() {
         this.colorClass = `color-${this.color}`
+    },
+    mounted() {
+        this.colorClass = `color-${this.color}`
     }
 };
 </script>
 
-<style>
+<style scoped>
     .card-header {
         margin-bottom: 0;
     }
