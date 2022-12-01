@@ -47,6 +47,6 @@ export default {
 
 .stderr {
   border-color: #a10000;
-  background: linear-gradient(to right, rgba(158, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  background: linear-gradient(to right, rgba(255, 0, 0, 0.2), rgba(49, 0, 0, 0.1));
 }
 </style>

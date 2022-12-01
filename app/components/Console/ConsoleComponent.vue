@@ -44,7 +44,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.logview.scrollTop = this.$refs.logview.scrollHeight;
       });
-      //TODO: send log to server
     }
   }
 }
