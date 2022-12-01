@@ -10,7 +10,8 @@
     "srv:start": "tsc && node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
     "app:dev": "vite",
     "app:build": "vite build",
-    "app:preview": "vite preview --port 4173"
+    "app:preview": "vite preview --port 4173",
+    "update": "git pull && npm i && npm run build"
   },
   "author": "",
   "license": "ISC",

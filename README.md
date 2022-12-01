@@ -38,6 +38,8 @@ npm run build #re build the thing
 jand restart jandweb #restart jand web
 ```
 
+A handy NPM script `npm run update` is also included for updating(doesn't include restarting jand-web)
+
 # Roadmap
 
 * Stage 1: Basic JanD Features
