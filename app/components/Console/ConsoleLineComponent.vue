@@ -49,4 +49,10 @@ export default {
   border-color: #a10000;
   background: linear-gradient(to right, rgba(255, 0, 0, 0.2), rgba(49, 0, 0, 0.1));
 }
+
+.procstart, .procstop {
+  border-color: #FFFFFF;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 </style>

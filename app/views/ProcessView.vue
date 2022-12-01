@@ -20,7 +20,7 @@ export default {
     Card1,
     Button,
     Loading
-},
+  },
   data() {
     return {
       process: {
@@ -38,17 +38,34 @@ export default {
     this.status = this.process.Running ? 'running' : 'stopped'
     this.stream = this.$client.startLogStream(this.process.Name)
     const convert = new Convert()
-    this.stream.onmessage = (e) => {
+    this.stream.onmessage = (e) => { //TODO: refactor into own component
       try {
         const data = JSON.parse(e.data)
-        this.$refs.console.append(convert.toHtml(data.data), data.type) 
+        switch (data.type) {
+          case 'stdout':
+            this.$refs.console.append(convert.toHtml(data.data), data.type)
+            break;
+          case 'stderr':
+            this.$refs.console.append(convert.toHtml(data.data), data.type)
+            break;
+          case 'procstart':
+            this.$refs.console.append(`<div><span class="material-icons">directions_run</span>The process has been started</div>`, data.type)
+            break;
+          case 'procstop':
+            this.$refs.console.append(`<div><span class="material-icons">close</span>The process has been stopped</div>`, data.type)
+            break;
+          default:
+            this.$refs.console.append(`<div><span class="material-icons">event</span>${data.type}</div>`, data.type)
+            break;
+        }
+        console.log(data.type)
       } catch (e) {
         console.log(e)
       }
     }
   },
   methods: {
-    async syncProcessInfo() { 
+    async syncProcessInfo() {
       //strip the path from the filename
       await this.$client.getProcess(this.$route.params.name).then((process) => {
         this.process = process;
@@ -94,7 +111,7 @@ export default {
         this.status = 'stopped'
       })
     },
-    
+
     stopProcess() {
       this.loading = true;
       this.$client.stopProcess(this.$route.params.name).then(() => {
@@ -121,7 +138,8 @@ export default {
           <Loading v-if="this.loading"></Loading>
         </h2>
         <div>
-          <Button type="primary" @click="restartProcess()" :disabled="this.loading">{{ process.Running ? 're' : '' }}start</Button>
+          <Button type="primary" @click="restartProcess()" :disabled="this.loading">{{ process.Running ? 're' : ''
+          }}start</Button>
           <Button type="danger" @click="stopProcess()" :disabled="!process.Running || this.loading">stop</Button>
         </div>
       </div>
@@ -192,11 +210,11 @@ export default {
   0% {
     background-position: 50% 0%
   }
-  
+
   50% {
     background-position: 51% 100%
   }
-  
+
   100% {
     background-position: 50% 0%
   }

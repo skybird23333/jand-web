@@ -16,6 +16,12 @@ class ConsoleLogStreamManager {
         jandClient.on('outlog', (data) => {
             this.handleLogEvent(data)
         })
+        jandClient.on('procstop', (data) => {
+            this.handleProcEvent(data)
+        })
+        jandClient.on('procstart', (data) => {
+            this.handleProcEvent(data)
+        })
     }
 
     private handleLogEvent(data: any) {
@@ -24,6 +30,17 @@ class ConsoleLogStreamManager {
                 stream.res.write("data:" + JSON.stringify({
                     data: data.Value.replace(/\u001B\[.+39m/, ''),
                     type: (data.Event === 'errlog') ? 'stderr' : 'stdout',
+                    time: Date.now()
+                }) + "\n\n")
+            }
+        })
+    }
+
+    private handleProcEvent(data: any) {
+        this.streams.map((stream) => {
+            if (stream.procname === data.Process) {
+                stream.res.write("data:" + JSON.stringify({
+                    type: data.Event,
                     time: Date.now()
                 }) + "\n\n")
             }

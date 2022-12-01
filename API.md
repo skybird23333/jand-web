@@ -157,11 +157,11 @@ For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-i
 Upon connected, the log stream will send back latest 15 lines of `stdin` and `stderr`.
 
 Each log entry is a JSON object indicating a line and whether it came from `stdin` or `stderr`. If a timestamp is available, it will be sent as well.
-| Params | Type                  | Description               |
-| ------ | --------------------- | ------------------------- |
-| data   | String                | The log entry             |
-| type   | `"stdin" \| "stderr"` | The type of the log entry |
-| time?  | Date                  | The timestamp of the log  |
+| Params | Type                                                  | Description               |
+| ------ | ----------------------------------------------------- | ------------------------- |
+| data   | String                                                | The log entry             |
+| type   | `"stdin" \| "stderr" \| "procstart" \| "procstop" \|` | The type of the log entry |
+| time?  | Date                                                  | The timestamp of the log  |
 
 ## Get application log
 
