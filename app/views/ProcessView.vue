@@ -58,7 +58,6 @@ export default {
             this.$refs.console.append(`<div><span class="material-icons">event</span>${data.type}</div>`, data.type)
             break;
         }
-        console.log(data.type)
       } catch (e) {
         console.log(e)
       }
