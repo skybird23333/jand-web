@@ -1,8 +1,11 @@
 # Contents
 - [Contents](#contents)
 - [Definitions](#definitions)
+- [Read before you start](#read-before-you-start)
+  - [Fatal Error](#fatal-error)
 - [Processes](#processes)
-  - [Get all running processes](#get-all-running-processes)
+  - [Get Complete Current status](#get-complete-current-status)
+  - [Get all processes(deprecated)](#get-all-processesdeprecated)
   - [Edit a processes running config](#edit-a-processes-running-config)
   - [Rename a process](#rename-a-process)
   - [Change process configuration](#change-process-configuration)
@@ -39,13 +42,45 @@ Errors use the standard HTTP response code(404, 403 etc.). Error responses are n
 
 Use JSON in request body unless specified otherwise. Upon a successful request, an endpoint might return 200 OK or 204 No Content if the endpoint doesnt specify a return value.
 
+> NOTE: This documentation will reference a lot of types and interfaces from npm package jand-ipc unless stated otherwise.
+
 **Types**
 
 Date: A UNIX timestamp of number.
 
+
+# Read before you start
+
+## Fatal Error
+If the server is unable to run for any reason(e.g unable to connect to JanD), the following JSON object will be returned for every request, with status code 503. The client should not attempt to make any other requests and should display the error message to the user. The client should always instruct the user to restart the server, as it will not change the status unless restarted.
+
+The server will not return 503 ander any other cases.
+
+| Params  | Type          | Description                                                   |
+| ------- | ------------- | ------------------------------------------------------------- |
+| errors? | JandWebErrors | The type of error occured. Their details are explained below. |
+
+JandWebErrors:
+| Error            | Description                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------- |
+| "jand-conn-fail" | The target jand-web server was unable to connect to JanD through the default IPC pipe name.                              |
+| "unknown"        | The target jand-web server was unable to start for an unknown reason. Check server logs for more details. |
 # Processes
 
-## Get all running processes
+## Get Complete Current status
+
+**GET** /status
+
+Returns: the following JSON Object
+| Params    | Type                                                              | Description                        |
+| --------- | ----------------------------------------------------------------- | ---------------------------------- |
+| processes | jand-ipc.RunTimeProcessInfo[]                                     | A list of processes on the machine |
+| daemon    | jand-ipc.DaemonStatus                                             | JanD status object                 |
+| system    | Response of [Get System Information](#get-the-system-information) | The system object.                 |
+
+## Get all processes(deprecated)
+
+> Deprecated: Use [Get Complete Current status](#get-complete-current-status) instead.
 
 **GET** `/process/all`
 
