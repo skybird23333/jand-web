@@ -1,4 +1,5 @@
 import ApiError from "./ApiError"
+import FatalError from "./FatalError"
 
 /**
 * REST Api Handler
@@ -51,6 +52,7 @@ import ApiError from "./ApiError"
             case 401:
                 throw new ApiError('Unauthorized', 401, resdata)
             case 404: return null
+            case 503: throw new FatalError()
             default: throw new ApiError(resdata.message | 'An Unknown Error Occurred', response.status, resdata)
         }
     }

@@ -1,5 +1,4 @@
 <script setup>
-const getErrorMessage = () => "Jand-web was not able to connect to the JanD daemon."
 </script>
 <template>
     Check that:

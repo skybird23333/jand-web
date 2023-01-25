@@ -7,7 +7,6 @@ export const apiRouter = Router()
 
 apiRouter.use(morgan(':method :url :status - :response-time ms'))
 apiRouter.use(json())
-apiRouter.use(cors())
 
 //TODO: register endpoints
 apiRouter.use('/process', require('./process').router)

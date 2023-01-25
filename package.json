@@ -18,6 +18,7 @@
   "dependencies": {
     "@kyvg/vue3-notification": "^2.4.1",
     "@types/express": "^4.17.14",
+    "@types/node": "^18.11.18",
     "@vitejs/plugin-vue": "^3.1.0",
     "ansi-to-html": "^0.7.2",
     "cors": "^2.8.5",
