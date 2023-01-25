@@ -7,6 +7,7 @@ import InputComponent from '../components/Common/InputComponent.vue';
 import Card from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import { debounce } from 'lodash-es'
+import userClient from '../http/userClient';
 
 export default {
   name: 'CreateView',
@@ -56,7 +57,7 @@ export default {
     targetpath: debounce(async function () {
       if (!this.targetpath) return
       this.loading = true
-      this.checks = (await this.$client.checkDirectoryWritable(this.targetpath))
+      this.checks = (await userClient.checkDirectoryWritable(this.targetpath))
       this.loading = false
     }, 500)
 

@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang=ts>
   import CustomNotifications from './components/Notification/CustomNotifications.vue';
   import FatalError from './http/FatalError';
   import userClient from './http/userClient';
   import { useRouter } from 'vue-router'
-
+  
   const router = useRouter()
 
   router.afterEach(() => {
@@ -35,7 +35,6 @@
     </div>
 
     <CustomNotifications />
-
     <div class="content">
       <RouterView></RouterView>
     </div>
