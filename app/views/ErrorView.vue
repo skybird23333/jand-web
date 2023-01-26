@@ -17,7 +17,7 @@ const message = "Jand-web was not able to connect to the JanD daemon." //TODO:
         <JandConnectError ref="error"></JandConnectError>
         <div class="info">
             <p>
-                Once you resolve the above issue, you should restart the jand-web server for it to function again.
+                Once you resolve the above issue, you need to restart the jand-web server for it to function again.
             </p>
         </div>
     </ContentMain>
@@ -25,7 +25,7 @@ const message = "Jand-web was not able to connect to the JanD daemon." //TODO:
 
 <style scoped>
 .error-header {
-    background: linear-gradient(rgba(255, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(rgba(255, 0, 0, 0.2) 0%, rgba(255, 0, 0, 0) 100%);
     text-align: center
 }
 </style>

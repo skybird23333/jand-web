@@ -7,6 +7,7 @@ import Button from '../components/Common/Button.vue';
 import Card from '../components/Common/Card.vue';
 import Alert from '../components/Common/Alert.vue';
 import ProcessListComponent from '../components/Home/ProcessListComponent.vue';
+import userClient from '../http/userClient';
 
 export default {
   name: 'HomeView',
@@ -45,14 +46,14 @@ export default {
   methods: {
     async fetchProcesses() {
       this.loading = true;
-      this.processes = await this.$client.getAllProcess()
-      this.daemon = await this.$client.getDaemonStatus()
-      this.sysInfo = await this.$client.getSystemInfo()
+      this.processes = await userClient.getAllProcess()
+      this.daemon = await userClient.getDaemonStatus()
+      this.sysInfo = await userClient.getSystemInfo()
       this.loading = false;
     },
     async onSave() {
       this.loading = true;
-      await this.$client.saveConfig()
+      await userClient.saveConfig()
       this.daemon.NotSaved = false;
       this.loading = false;
     }

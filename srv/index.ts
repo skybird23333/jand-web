@@ -7,44 +7,43 @@ import cors from 'cors'
 const app = express()
 
 process.on('uncaughtException', (e) => {
-    if(e instanceof Error) {
-        if(e.message.includes('ENOENT')) {
+    if (e instanceof Error) {
+        if (e.message.includes('ENOENT')) {
+            console.error('[FATAL] Unable to connect to JanD Daemon. Please visit the app for more details.')
             app.all('/api/*', (req, res) => {
-                res.status(503).json({error: 'jand-conn-fail'})
+                res.status(503).json({ error: 'jand-conn-fail' })
             })
+            app.use(fallback('index.html', { root: 'dist-app' }))
         }
     }
 })
 
 async function run() {
+    app.use(cors())
+
+    app.use('/', express.static('dist-app'))
     connectToJanD()
     
-    app.set('view engine', 'ejs')
-    app.use(fallback('index.html', { root: 'dist-app' }))
-    app.use(cors())
-    app.use('/', express.static('dist-app'))
     
-    app.listen(process.env.PORT || 3000)
     console.log('App is ready at http://localhost:' + (process.env.PORT || 3000))
+
+    app.listen(process.env.PORT || 3000)
 }
 
 async function connectToJanD() {
     try {
         await jandClient.connect()
         app.use('/api', apiRouter)
-        jandClient.subscribe(["errlog","outlog","procadd","procdel","procren","procstart","procstop"])
-    } catch(e) {
-        if(e instanceof Error) {
-            if(e.message.includes('ENOENT')) {
-                app.all('/api/*', (req, res) => {
-                    res.status(503).json({error: 'jand-conn-fail'})
-                })
-            } else {
-                console.error(e)
-                app.all('/api/*', (req, res) => {
-                    res.status(503).json({error: 'unknown'})
-                })
-            }
+        app.use(fallback('index.html', { root: 'dist-app' }))
+        jandClient.subscribe(["errlog", "outlog", "procadd", "procdel", "procren", "procstart", "procstop"])
+    } catch (e) {
+        if (e instanceof Error) {
+            console.error('[FATAL] An unknown error occured while starting the server. Please visit the app for more details. Additional errors have been logged.')
+            console.error(e)
+            app.all('/api/*', (req, res) => {
+                res.status(503).json({ error: 'unknown' })
+            })
+            app.use(fallback('index.html', { root: 'dist-app' }))
         }
     }
 
