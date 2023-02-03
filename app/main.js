@@ -16,6 +16,8 @@ async function fetchMachineName() {
     document.title = title;
 }
 
+export { client }
+
 fetchMachineName()
 
 app.use(router)

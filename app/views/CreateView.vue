@@ -7,6 +7,9 @@ import InputComponent from '../components/Common/InputComponent.vue';
 import Card from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import { debounce } from 'lodash-es'
+import CreatePresetsComponent from '../components/Create/CreatePresetsComponent.vue';
+import ComingSoon from '../components/Common/ComingSoon.vue';
+import presets from '../data/processCreatePresets'
 
 export default {
   name: 'CreateView',
@@ -17,10 +20,14 @@ export default {
     Loading,
     InputComponent,
     Card,
-    Button
+    Button,
+    CreatePresetsComponent,
+    ComingSoon
   },
   data() {
     return {
+      presets: presets,
+      //Default fields unless overriden by presets.
       process: {
         Name: '',
         Filename: "",
@@ -28,16 +35,24 @@ export default {
         Arguments: [],
         WorkingDirectory: ""
       },
+      options: { }, // This is a dynamic field to be provided by the presets.
       giturl: '',
       targetpath: '',
       loading: false,
       checks: {
         writable: undefined,
         exists: undefined
+      },
+      step: 0,
+      createPreset: {
+
       }
     }
   },
-  mounted() {
+  async mounted() {
+    this.sysInfo = await this.$client.getSystemInfo()
+    //TODO: Cross platform, maybe let server return a resolved path of home directory
+    this.process.WorkingDirectory = `/home/${this.sysInfo.username}/.jand-apps`
   },
   methods: {
   },
@@ -53,10 +68,10 @@ export default {
       this.process.Filename = argsArray.shift()
       this.process.Arguments = argsArray
     },
-    targetpath: debounce(async function () {
-      if (!this.targetpath) return
+    'process.WorkingDirectory': debounce(async function () {
+      if (!this.process.WorkingDirectory) return
       this.loading = true
-      this.checks = (await this.$client.checkDirectoryWritable(this.targetpath))
+      this.checks = (await this.$client.checkDirectoryWritable(this.process.WorkingDirectory))
       this.loading = false
     }, 500)
 
@@ -72,6 +87,21 @@ export default {
       </h2>
     </ContentHead>
     <ContentMain>
+      <div v-if="(step == 0)">
+        <CreatePresetsComponent title="Use existing directory"
+          description="Create a process on an existing directory on the machine." icon="folder">
+        </CreatePresetsComponent>
+        <ComingSoon>
+          <CreatePresetsComponent title="Deploy from git url"
+            description="Clone from a git url and start running the app." icon="get_app"></CreatePresetsComponent>
+        </ComingSoon>
+        <ComingSoon>
+          <CreatePresetsComponent title="One-time job"
+            description="Create a job process that won't be auto restarted, for example, building an app. You will be able to see its progress."
+            icon="work"></CreatePresetsComponent>
+        </ComingSoon>
+      </div>
+
       <Card>
         <template #header>
           Launch options
@@ -101,21 +131,39 @@ export default {
           Use existing directory
         </template>
         <div>
-          Working Directory <InputComponent v-model="this.targetpath" placeholder="/var/app">
+          Working Directory <InputComponent v-model="process.WorkingDirectory" placeholder="/var/app">
           </InputComponent>
           <Button type="confirm">Create</Button>
           <Loading v-if="this.loading"></Loading>
           <div v-if="checks.exists">
-            Directory exists
+            <span class="material-icons">
+              done
+            </span>
+            Existing directory
           </div>
           <div v-else>
+            <span class="material-icons">
+              warning
+            </span>
             Directory doesn't exist
+            <div v-if="checks.parentWritable">
+              <span class="material-icons">
+                done
+              </span>
+              Directory can be created
+            </div>
+            <div v-else>
+              <span class="material-icons">
+                warning
+              </span>
+              Directory cannot be created
+            </div>
           </div>
         </div>
       </Card>
 
       <h2 style="text-align: center;">OR</h2>
-
+      <!-- 
       <Card>
         <template #header>
           Deploy from git url
@@ -146,7 +194,7 @@ export default {
           </div>
           <Button type="confirm">Clone and deploy</Button>
         </div>
-      </Card>
+      </Card> -->
 
     </ContentMain>
   </div>

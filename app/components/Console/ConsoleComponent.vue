@@ -24,8 +24,6 @@ export default {
   },
   methods: {
     append(line, type) {
-      console.log(this.$refs.logview.scrollTop + 200, 'scrolltop')
-      console.log(this.$refs.logview.scrollHeight, 'scrollheight')
       const isUserScrolledUp = !(this.$refs.logview.scrollTop + 200 == this.$refs.logview.scrollHeight)
       this.lines.push({ text: line, type: type });
       this.$nextTick(() => {
