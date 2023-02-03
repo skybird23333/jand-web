@@ -11,6 +11,7 @@
 import ConsoleLineComponent from "./ConsoleLineComponent.vue";
 import Card from "../Common/Card.vue";
 import InputComponent from "../Common/InputComponent.vue";
+import userClient from '../../http/userClient'
 
 export default {
   name: "ConsoleComponent",
@@ -35,7 +36,7 @@ export default {
     async handleSend(evt) {
       if (evt.keyCode !== 13) return
       if (this.input === "") return;
-      this.$client.sendToProcessStdin(this.name, this.input);
+      userClient.sendToProcessStdin(this.name, this.input);
       this.append(this.input, "stdin");
       this.input = "";
     },

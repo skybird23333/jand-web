@@ -10,6 +10,7 @@ import { debounce } from 'lodash-es'
 import CreatePresetsComponent from '../components/Create/CreatePresetsComponent.vue';
 import ComingSoon from '../components/Common/ComingSoon.vue';
 import presets from '../data/processCreatePresets'
+import userClient from '../http/userClient';
 
 export default {
   name: 'CreateView',
@@ -71,7 +72,7 @@ export default {
     'process.WorkingDirectory': debounce(async function () {
       if (!this.process.WorkingDirectory) return
       this.loading = true
-      this.checks = (await this.$client.checkDirectoryWritable(this.process.WorkingDirectory))
+      this.checks = (await userClient.checkDirectoryWritable(this.targetpath))
       this.loading = false
     }, 500)
 

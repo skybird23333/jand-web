@@ -8,6 +8,7 @@ import Card1 from '../components/Common/Card.vue';
 import Button from '../components/Common/Button.vue';
 import Loading from '../components/Common/Loading.vue';
 import Convert from 'ansi-to-html'
+import userClient from '../http/userClient';
 
 export default {
   name: 'ProcessView',
@@ -36,7 +37,7 @@ export default {
   async mounted() {
     await this.syncProcessInfo()
     this.status = this.process.Running ? 'running' : 'stopped'
-    this.stream = this.$client.startLogStream(this.process.Name)
+    this.stream = userClient.startLogStream(this.process.Name)
     const convert = new Convert()
     this.stream.onmessage = (e) => { //TODO: refactor into own component
       try {
@@ -66,7 +67,7 @@ export default {
   methods: {
     async syncProcessInfo() {
       //strip the path from the filename
-      await this.$client.getProcess(this.$route.params.name).then((process) => {
+      await userClient.getProcess(this.$route.params.name).then((process) => {
         this.process = process;
         this.process.Filename = this.process.Filename.replace(this.process.WorkingDirectory, '')
       });
@@ -75,7 +76,7 @@ export default {
     restartProcess() {
       this.loading = true;
       this.status = 'starting'
-      this.$client.restartProcess(this.$route.params.name).then(() => {
+      userClient.restartProcess(this.$route.params.name).then(() => {
         this.syncProcessInfo()
         this.$notify({
           title: "Restarting process",
@@ -113,7 +114,7 @@ export default {
 
     stopProcess() {
       this.loading = true;
-      this.$client.stopProcess(this.$route.params.name).then(() => {
+      userClient.stopProcess(this.$route.params.name).then(() => {
         this.syncProcessInfo()
         this.status = 'stopped'
         this.loading = false;

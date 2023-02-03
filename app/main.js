@@ -22,6 +22,4 @@ fetchMachineName()
 
 app.use(router)
 app.use(Notifications)
-
-app.config.globalProperties.$client = client
 app.mount('#app')
