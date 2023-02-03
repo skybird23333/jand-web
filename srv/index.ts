@@ -23,18 +23,17 @@ async function run() {
 
     app.use('/', express.static('dist-app'))
     connectToJanD()
+    app.use('/api', apiRouter)
+    app.use(fallback('index.html', { root: 'dist-app' }))
     
     
     console.log('App is ready at http://localhost:' + (process.env.PORT || 3000))
-
     app.listen(process.env.PORT || 3000)
 }
 
 async function connectToJanD() {
     try {
         await jandClient.connect()
-        app.use('/api', apiRouter)
-        app.use(fallback('index.html', { root: 'dist-app' }))
         jandClient.subscribe(["errlog", "outlog", "procadd", "procdel", "procren", "procstart", "procstop"])
     } catch (e) {
         if (e instanceof Error) {

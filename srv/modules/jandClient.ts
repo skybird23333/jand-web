@@ -1,5 +1,5 @@
 import { JandIpcClient } from "jand-ipc";
 
-export const jandClient = new JandIpcClient('/core')
+export const jandClient = new JandIpcClient('')
 
 jandClient.DEBUG = true
