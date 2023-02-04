@@ -10,4 +10,5 @@ export interface IRenameProcessData {
 export interface IDaemonSystemInfoResponse {
     hostname: string
     username: string
+    battery?: number
 }

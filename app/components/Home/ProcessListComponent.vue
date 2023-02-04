@@ -5,6 +5,10 @@
             <span class="material-icons">storage</span>
             <b>
                 {{ systemData.sysInfo.username }}@{{ systemData.sysInfo.hostname }}
+                <span class="material-icons" v-if="systemData.sysInfo.battery">
+                    battery_full
+                </span>
+                {{ systemData.sysInfo.battery ? `${systemData.sysInfo.battery*100}%` : ''}}
             </b>
             JanD {{ systemData.daemon.Version }}
         </div>
@@ -39,15 +43,20 @@
                 </th>
             </tr>
             <ProcessComponent v-for="process in processData" :key="process.id" :process="process"
-                :mode="options.mode" />
+            :mode="options.mode" />
         </table>
     </div>
     <div v-else>
         <div style="border-bottom: 1px solid var(--foreground-border)">
             <span class="material-icons">storage</span>
             <b>
-                {{ systemData.sysInfo.username }}@{{ systemData.sysInfo.hostname }} | {{ systemData.daemon.Version }}
+                {{ systemData.sysInfo.username }}@{{ systemData.sysInfo.hostname }}
+                <span class="material-icons" v-if="systemData.sysInfo.battery">
+                    battery_full
+                </span>
+                {{ systemData.sysInfo.battery ? `${systemData.sysInfo.battery*100}%` : ''}}
             </b>
+            JanD {{ systemData.daemon.Version }}
         </div>
         <ProcessComponent v-for="process in processData" :key="process.id" :process="process" :mode="options.mode" />
     </div>
