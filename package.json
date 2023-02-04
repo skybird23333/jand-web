@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
-    "build-start": "npm run app:build && npm run srv:start",
+    "build-start": "npm run build && npm run srv:start",
     "build": "npm run app:build && tsc",
     "srv:start": "tsc && node --enable-source-maps -r why-is-node-running/include dist-srv/index.js",
     "app:dev": "vite",
@@ -27,7 +27,7 @@
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-history-api-fallback": "^2.2.1",
-    "jand-ipc": "github:skybird23333/jand-ipc#main",
+    "jand-ipc": "^2.2.0",
     "lodash-es": "^4.17.21",
     "morgan": "^1.10.0",
     "tailing-stream": "^0.2.0",
