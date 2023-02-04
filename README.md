@@ -42,23 +42,4 @@ A handy NPM script `npm run update` is also included for updating(doesn't includ
 
 # Roadmap
 
-* Stage 1: Basic JanD Features
-  - [x] Viewing processes information
-  - [x] Restarting/stopping processes
-  - [ ] Creating new process on existing dir
-  - [x] Viewing the processes logs
-  - [ ] Viewing the processes historical logs
-  - [x] Sending stuff to process stdin
-  - [ ] Changing processes launch config(command, dir, etc)
-  - [ ] Saving the list
-  - [ ] Deleting processes
-* Stage 2: User & permissions
-  - [ ] User
-  - [ ] Permissions
-  - [ ] Registeration?
-* Stage 3: Automation/Deployment
-  - [ ] Deploy from Github w oauth2(maybe)/git url
-  - [ ] Run tasks before/after deploy
-* Stage 4: Extensions
-  - [ ] The api
-  - [ ] Example extension: BDS Config editor
+see #2
