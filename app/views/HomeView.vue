@@ -1,6 +1,5 @@
 <script>
-import ContentHead from '../components/Common/ContentHead.vue';
-import ContentMain from '../components/Common/ContentMain.vue';
+import Content from '../components/Common/Content.vue';
 import ProcessComponent from '../components/Home/ProcessComponent.vue';
 import Loading from '../components/Common/Loading.vue';
 import Button from '../components/Common/Button.vue';
@@ -12,15 +11,14 @@ import userClient from '../http/userClient';
 export default {
   name: 'HomeView',
   components: {
-    ContentHead,
-    ContentMain,
+    Content,
     ProcessComponent,
     Loading,
     Button,
     Card,
     Alert,
     ProcessListComponent
-},
+  },
   data() {
     return {
       processes: [],
@@ -62,11 +60,11 @@ export default {
 </script>
 
 <template>
-  <div>
-    <ContentHead>
+  <Content>
+    <template #header>
       <h2>
         All Processes
-        <Loading v-if="loading"/>
+        <Loading v-if="loading" />
         <Button type="confirm" style="float: right" @click="$router.push('/create')">
           New
         </Button>
@@ -78,9 +76,9 @@ export default {
           Save now
         </Button>
       </Alert>
-    </ContentHead>
-    <ContentMain>
-      <ProcessListComponent :processes="processes" :systemData="{daemon, sysInfo}"></ProcessListComponent>
-    </ContentMain>
-  </div>
+    </template>
+    <template #content>
+      <ProcessListComponent :processes="processes" :systemData="{ daemon, sysInfo }"></ProcessListComponent>
+    </template>
+  </Content>
 </template>

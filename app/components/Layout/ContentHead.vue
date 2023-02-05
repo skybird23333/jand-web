@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div class="content-content">
+    <div class="content-header">
         <slot></slot>
     </div>
 </template>

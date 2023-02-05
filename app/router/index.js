@@ -20,7 +20,17 @@ const router = createRouter({
         {
             path: '/process/:name',
             name: 'process',
-            component: ProcessView
+            component: ProcessView,
+            children: [
+                {
+                    path: 'console',
+                    component: () => import('../views/ProcessSubViews/ProcessConsoleView.vue')
+                },
+                {
+                    path: 'dashboard',
+                    component: () => import('../views/ProcessSubViews/ProcessDashboardView.vue')
+                }
+            ]
         },
         {
             path: '/error',

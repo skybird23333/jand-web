@@ -1,6 +1,5 @@
 <script>
-import ContentHead from '../components/Common/ContentHead.vue';
-import ContentMain from '../components/Common/ContentMain.vue';
+import Content from '../components/Common/Content.vue';
 import ProcessComponent from '../components/Home/ProcessComponent.vue';
 import Loading from '../components/Common/Loading.vue';
 import InputComponent from '../components/Common/InputComponent.vue';
@@ -15,8 +14,7 @@ import userClient from '../http/userClient';
 export default {
   name: 'CreateView',
   components: {
-    ContentHead,
-    ContentMain,
+    Content,
     ProcessComponent,
     Loading,
     InputComponent,
@@ -36,7 +34,7 @@ export default {
         Arguments: [],
         WorkingDirectory: ""
       },
-      options: { }, // This is a dynamic field to be provided by the presets.
+      options: {}, // This is a dynamic field to be provided by the presets.
       giturl: '',
       targetpath: '',
       loading: false,
@@ -81,13 +79,13 @@ export default {
 </script>
 
 <template>
-  <div>
-    <ContentHead>
+  <Content>
+    <template #header>
       <h2>
         Create new
       </h2>
-    </ContentHead>
-    <ContentMain>
+    </template>
+    <template #content>
       <div v-if="(step == 0)">
         <CreatePresetsComponent title="Use existing directory"
           description="Create a process on an existing directory on the machine." icon="folder">
@@ -196,9 +194,8 @@ export default {
           <Button type="confirm">Clone and deploy</Button>
         </div>
       </Card> -->
-
-    </ContentMain>
-  </div>
+    </template>
+  </Content>
 </template>
 
 <style scoped>

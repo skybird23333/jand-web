@@ -35,9 +35,7 @@
     </div>
 
     <CustomNotifications />
-    <div class="content">
-      <RouterView></RouterView>
-    </div>
+    <RouterView></RouterView>
   </div>
 </template>
 

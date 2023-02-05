@@ -2,13 +2,19 @@ import { Router, Request, Response, Errback, NextFunction, json } from "express"
 import { apiError } from "../modules/apiError"
 import morgan from 'morgan'
 import cors from 'cors'
+import { jandClient } from "../modules/jandClient";
 
 export const apiRouter = Router()
 
 apiRouter.use(morgan(':method :url :status - :response-time ms'))
 apiRouter.use(json())
 
-//TODO: register endpoints
+apiRouter.use('*', (req:Request, res:Response, next:NextFunction) => {
+    // @ts-ignore
+    console.log(jandClient.requestQueue)
+    next()
+})
+
 apiRouter.use('/process', require('./process').router)
 apiRouter.use('/create', require('./create').router)
 apiRouter.use('/daemon', require('./daemon').router)
