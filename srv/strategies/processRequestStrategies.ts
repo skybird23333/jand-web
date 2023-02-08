@@ -1,6 +1,6 @@
 import { RuntimeProcessInfo } from "jand-ipc"
-import { jandClient } from "../modules/jandClient"
-import multimachine from "../modules/multimachineHost"
+import { jandClient } from "../utils/jandClient"
+import multimachine from "../modules/multimachinehost"
 
 export function getRuntimeProcessList() {
     if (multimachine.isMultiMachine()) {

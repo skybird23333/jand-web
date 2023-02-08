@@ -2,3 +2,4 @@
 node_modules
 dist-srv
 dist-app
+storage.json

@@ -1,8 +1,9 @@
 import express from 'express'
 import { apiRouter } from './routes'
 import fallback from 'express-history-api-fallback'
-import { jandClient } from './modules/jandClient'
+import { jandClient } from './utils/jandClient'
 import cors from 'cors'
+import configManager from './utils/configManager'
 
 const app = express()
 
@@ -24,6 +25,9 @@ async function run() {
     app.use('/', express.static('dist-app'))
     app.use('/api', apiRouter)
     app.use(fallback('index.html', { root: 'dist-app' }))
+
+    configManager.loadModulesByConfig()
+
     connectToJanD()
 }
 

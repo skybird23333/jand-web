@@ -26,9 +26,26 @@ export interface IPeerMachine {
 }
 
 
-export interface IMultimachineHostConfig {
+export type IConfig = IMultimachineHostConfig | IMultimachinePeerConfig | IBaseConfig
+
+export interface IBaseConfig {
     enabled: boolean
-    isPeer: boolean
 }
 
-export interface IMultimachinePeerConfig {}
+/**
+ * multimachinehost
+ */
+/**
+ * multimachinehost
+ */
+export interface IMultimachineHostConfig extends IBaseConfig {
+    peers: IPeerMachine[]
+}
+
+/**
+ * multimachinepeer
+ */
+export interface IMultimachinePeerConfig extends IBaseConfig{
+    tokenHash: string
+    expectedHost: string
+}

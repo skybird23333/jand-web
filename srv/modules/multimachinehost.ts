@@ -1,6 +1,7 @@
 import { NextFunction } from 'express'
-import { IJandWebProcess } from '../typings/interfaces'
-import { jandClient } from './jandClient'
+import config from '../utils/configManager'
+import { IJandWebProcess, IMultimachineHostConfig } from '../typings/interfaces'
+import { jandClient } from '../utils/jandClient'
 
 /**
  * The multimachine class exports functions for communicating with other machines when in MultiMachine mode.
@@ -12,12 +13,27 @@ export default new class MultiMachine {
         [host: string]: IJandWebProcess[]
     } = {}
     combindProcessList: IJandWebProcess[]
+    config: IMultimachineHostConfig
 
     constructor() {
+        this.config = config.getConfigforModule<IMultimachineHostConfig>('multimachinehost')
+        if(!this.config.enabled) return
+        if(!this.config) {
+            this.config = {
+                enabled: false,
+                peers: []
+            }
+            config.updateConfigforModule('multimachinehost', this.config)
+        }
+        this.initialize()
+    }
+
+    initialize() {
+        //TODO: Initiate multimachineConnection with all peers
     }
 
     isMultiMachine() {
-        return false
+        return this.config.enabled
     }
 
     calculateCombinedProcessList() {

@@ -42,6 +42,12 @@ export default new class Storage {
     }
 
     getStorage(module: string) {
-        return this.storage[module];
+        if(!this.storage[module]) {
+            this.storage[module] = {};
+            this.writeStorageFile();
+            return {}
+        } else {
+            return this.storage[module];
+        }
     }
 }

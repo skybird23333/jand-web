@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express"
-import { jandClient } from "../modules/jandClient"
-import { apiError } from "../modules/apiError"
+import { jandClient } from "../utils/jandClient"
+import { apiError } from "../utils/apiError"
 import { hostname, userInfo } from "node:os"
 import { IDaemonSystemInfoResponse } from "../typings/interfaces"
 import batteryLevel from "battery-level"

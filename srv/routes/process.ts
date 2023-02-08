@@ -1,8 +1,8 @@
-import { apiError } from "../modules/apiError"
+import { apiError } from "../utils/apiError"
 import validateRequestBody from "../utils/validate-request-body"
 import { NextFunction, Request, Response, Router } from "express"
 import { IRenameProcessData, IRuntimeConfigData } from "srv/typings/interfaces"
-import { jandClient } from "../modules/jandClient"
+import { jandClient } from "../utils/jandClient"
 
 export const router = Router()
 

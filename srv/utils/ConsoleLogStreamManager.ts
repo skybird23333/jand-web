@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { jandClient } from "../modules/jandClient";
+import { jandClient } from "./jandClient";
 
 
 /**

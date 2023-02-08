@@ -1,8 +1,8 @@
 import { Router, Request, Response, Errback, NextFunction, json } from "express";
-import { apiError } from "../modules/apiError"
+import { apiError } from "../utils/apiError"
 import morgan from 'morgan'
 import cors from 'cors'
-import { jandClient } from "../modules/jandClient";
+import { jandClient } from "../utils/jandClient";
 
 export const apiRouter = Router()
 

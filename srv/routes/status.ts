@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { hostname, userInfo } from "os";
-import { jandClient } from "../modules/jandClient";
+import { jandClient } from "../utils/jandClient";
 
 export const router = Router()
 
