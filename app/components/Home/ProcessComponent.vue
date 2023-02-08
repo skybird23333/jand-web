@@ -31,7 +31,7 @@ export default {
       this.process.Running ? this.$data.color = 'green' : this.$data.color = 'red'
     },
     onClicked() {
-      this.$router.push(`/process/${this.process.Name}`)
+      this.$router.push(`/process/${this.process.Name}/dashboard`)
     }
   },
   watch: {

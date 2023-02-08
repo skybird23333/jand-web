@@ -30,8 +30,7 @@ export default {
         Arguments: []
       },
       loading: false,
-      status: 'none',
-      stream: null
+      status: 'none'
     }
   },
   async mounted() {
@@ -114,10 +113,6 @@ export default {
 <template>
 
   <Sidebar>
-    <RouterLink to="/">
-      <span class="material-icons">arrow_back</span>
-      <span>Back</span>
-    </RouterLink>
     <RouterLink :to="`/process/${ process.Name }/dashboard`">
       <span class="material-icons">dashboard</span>
       <span>Dashboard</span>

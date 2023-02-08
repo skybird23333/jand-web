@@ -22,6 +22,8 @@
   - [Application log stream](#application-log-stream)
   - [Get application log](#get-application-log)
   - [Send command to process](#send-command-to-process)
+- [Multimachine Support](#multimachine-support)
+  - [Setup](#setup)
 
 # Definitions
 
@@ -213,3 +215,26 @@ Send a text to the processes `stdin`.
 | Params | Type   | Description      |
 | ------ | ------ | ---------------- |
 | data   | String | The text to send |
+
+# Multimachine Support
+Multimachine allows accessing jand and jand-web across multiple machines within one jand-web app.
+```
+app
+ |
+ v
+srv(main) - - - - - - - - - - - - {...}    
+ |            |           |       
+ |            v           v      
+ |          srv(peer)  srv(peer)
+ |            |           |      
+ v            v           v      
+jand         jand        jand
+```
+
+## Setup
+1. User initiates a MM network on the main machine.
+2. srv(main) generates a configuration file which is to be placed inside the srv(peer) directory.
+> The file contains a hash of the main machine's token.
+3. User should then reboot peer. Peer will start as peer mode output settings(i.e IP, port) to the console.
+4. User input the details from peer into main.
+5. Main initiates a connection test with peer.
