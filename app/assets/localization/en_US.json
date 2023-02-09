@@ -1,0 +1,28 @@
+{
+    "common.on": "ON",
+    "common.off": "OFF",
+    "home.list.createnew": "Create new",
+    "home.list.allprocess": "All processes",
+    "home.notsaved.msg": "Your process configuration list is unsaved. Changes made to it will be lost when you restart.",
+    "home.notsaved.action": "Save now",
+    "home.listitem.autostart": "Autorestart",
+    "home.listitem.startatlaunch":"Start at launch",
+    "home.listitem.restarts": "%s restarts",
+
+    "process.sidebar.back": "Back",
+    "process.sidebar.dashboard": "Dashboard",
+    "process.sidebar.console": "Console",
+
+    "process.action.start": "Start",
+    "process.action.stop": "Stop",
+    "process.action.restart": "Restart",
+
+    "process.restartproc.title": "Restarting process",
+    "process.restartproc.desc": "Verifying process is running",
+    "process.restartsucc.title": "Restart successful",
+    "process.restartsucc.desc": "Process restarted successfully",
+    "process.restartfail.title": "Restart failed",
+    "process.restartfail.desc": "Process has errored and did not start",
+    "process.restarterr.title": "Restart failed",
+    "process.restarter.desc": "An error occured while restarting"
+}

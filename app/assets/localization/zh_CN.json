@@ -1,0 +1,28 @@
+{
+    "common.on": "开",
+    "common.off": "关",
+    "home.list.createnew": "新建进程",
+    "home.list.allprocess": "所有进程",
+    "home.notsaved.msg": "你的进程列表尚未保存，将会在重启后丢失。",
+    "home.notsaved.action": "现在保存",
+    "home.listitem.autostart": "自动重启",
+    "home.listitem.startatlaunch":"开机自启",
+    "home.listitem.restarts": "%s重启",
+
+    "process.sidebar.back": "返回",
+    "process.sidebar.dashboard": "仪表板",
+    "process.sidebar.console": "终端",
+
+    "process.action.start": "启动",
+    "process.action.stop": "停止",
+    "process.action.restart": "重启",
+
+    "process.restartproc.title": "重启进程",
+    "process.restartproc.desc": "正在验证进程是否有运行",
+    "process.restartsucc.title": "重启成功",
+    "process.restartsucc.desc": "进程成功重启",
+    "process.restartfail.title": "重启失败",
+    "process.restartfail.desc": "进程遇到了错误且无法重启",
+    "process.restarterr.title": "重启失败",
+    "process.restarter.desc": "发生了未知错误"
+}
