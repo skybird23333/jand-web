@@ -1,8 +1,7 @@
 import { EventEmitter } from "node:stream"
 import fetch from "node-fetch"
 import { IPeerMachine } from "srv/typings/interfaces"
-const https = require('https')
-
+const http = require('http')
 /**
  * This class is responsible for handling the communication with other machines.
  * There may be multiple instances of this as one instance is responsible for one machine.
@@ -26,7 +25,7 @@ export class multimachineConnection extends EventEmitter {
     async initiateConnectionTest() {
         let retryCount = 0
 
-        const httpsAgent = new https.Agent({
+        const httpsAgent = new http.Agent({
             rejectUnauthorized: false
         })
 
