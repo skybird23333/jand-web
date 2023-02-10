@@ -21,6 +21,7 @@ export default new class MultiMachinePeer {
         if (!this.config.enabled) return
         this.peerAuthCheck = this.peerAuthCheck.bind(this)
         this.setupPeerRoutes = this.setupPeerRoutes.bind(this)
+        console.log('[multimachinepeer] You are now in MultiMachine peer mode. Jand-web server will now only accept connections from the main machine.')
     }
 
     isMultiMachinePeer() {
