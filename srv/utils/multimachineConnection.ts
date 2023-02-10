@@ -1,4 +1,7 @@
 import { EventEmitter } from "node:stream"
+import fetch from "node-fetch"
+import { IPeerMachine } from "srv/typings/interfaces"
+const https = require('https')
 
 /**
  * This class is responsible for handling the communication with other machines.
@@ -6,7 +9,7 @@ import { EventEmitter } from "node:stream"
  * @see multimachine.ts
  */
 export class multimachineConnection extends EventEmitter {
-    host: string
+    host: IPeerMachine
     connected: boolean
     connectFailError: string
     token: string
@@ -22,7 +25,12 @@ export class multimachineConnection extends EventEmitter {
      */
     async initiateConnectionTest() {
         let retryCount = 0
-        while (retryCount < 10) {
+
+        const httpsAgent = new https.Agent({
+            rejectUnauthorized: false
+        })
+
+        const runConnectionTest = async () => {
             try {
                 const controller = new AbortController()
                 const timeoutId = setTimeout(() => {
@@ -30,28 +38,38 @@ export class multimachineConnection extends EventEmitter {
                     retryCount++
                     return
                 }, 5000)
-                const res = await fetch(`http://${this.host}/multimachine/connection-test`, {
+                const res = await fetch(`https://${this.host.host}/api/multimachine/connection-test`, {
                     signal: controller.signal,
                     headers: {
                         Authorization: `${this.token}`
-                    }
+                    },
+                    agent: httpsAgent
                 })
                 clearTimeout(timeoutId)
                 if (res.status === 200) {
                     this.connected = true
                     this.connectFailError = ''
                     return
-                } else if(!res.ok) {
+                } else if (!res.ok) {
                     this.connectFailError = `${res.status} ${res.statusText} ${res.body}`
                     this.connected = false
                     return
                 }
-            } catch(e) {
+            } catch (e) {
                 this.connectFailError = e.message
                 this.connected = false
                 return
             }
         }
+
+        while (retryCount < 10) {
+            await runConnectionTest()
+            if (this.connected) {
+                return
+            } else continue
+        }
+        console.error(`[multimachinehost] Failed to connect to ${this.host.name}(${this.host.host}) after 10 retries`)
+        console.error(`[multimachinehost] Error: ${this.connectFailError}`)
     }
 
     async getProcesses() {

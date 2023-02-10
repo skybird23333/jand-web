@@ -17,7 +17,7 @@ export default new class MultiMachine {
     } = {}
     combindProcessList: IJandWebProcess[]
     config: IMultimachineHostConfig
-    connections: multimachineConnection[]
+    connections: multimachineConnection[] = []
 
     constructor() {
         this.config = config.getConfigforModule<IMultimachineHostConfig>('multimachinehost')
