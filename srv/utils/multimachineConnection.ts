@@ -12,6 +12,10 @@ export class multimachineConnection extends EventEmitter {
     connected: boolean
     connectFailError: string
     token: string
+    httpsAgent = new http.Agent({
+        rejectUnauthorized: false
+    })
+
     constructor(host, token) {
         super()
         this.host = host
@@ -25,30 +29,27 @@ export class multimachineConnection extends EventEmitter {
     async initiateConnectionTest() {
         let retryCount = 0
 
-        const httpsAgent = new http.Agent({
-            rejectUnauthorized: false
-        })
 
         const runConnectionTest = async () => {
             try {
                 const controller = new AbortController()
+                retryCount++
                 const timeoutId = setTimeout(() => {
                     controller.abort()
-                    retryCount++
                     return
                 }, 5000)
-                const res = await fetch(`https://${this.host.host}:${this.host.port}/api/multimachine/connection-test`, {
+                const res = await fetch(`http://${this.host.host}:${this.host.port}/api/multimachine/connection-test`, {
                     signal: controller.signal,
                     headers: {
-                        Authorization: `${this.token}`
+                        Authorization: `Bearer ${this.token}`
                     },
-                    agent: httpsAgent
+                    agent: this.httpsAgent
                 })
                 clearTimeout(timeoutId)
-                if (res.status === 200) {
+                if (res.ok) {
                     this.connected = true
                     this.connectFailError = ''
-                    return
+                    return console.log('[multimachinehost] Connected to ' + this.host.name + '(' + this.host.host + ')' + ' successfully')
                 } else if (!res.ok) {
                     this.connectFailError = `${res.status} ${res.statusText} ${res.body}`
                     this.connected = false
@@ -64,18 +65,21 @@ export class multimachineConnection extends EventEmitter {
         while (retryCount < 10) {
             await runConnectionTest()
             if (this.connected) {
-                return
+                break
             } else continue
         }
-        console.error(`[multimachinehost] Failed to connect to ${this.host.name}(${this.host.host}) after 10 retries`)
-        console.error(`[multimachinehost] Error: ${this.connectFailError}`)
+        if(retryCount > 10) {
+            console.error(`[multimachinehost] Failed to connect to ${this.host.name}(${this.host.host}) after 10 retries`)
+            console.error(`[multimachinehost] Error: ${this.connectFailError}`)
+        }
     }
 
     async getProcesses() {
-        const res = await fetch(`http://${this.host}/multimachine/processes`, {
+        const res = await fetch(`http://${this.host.host}:${this.host.port}/api/process/all`, {
             headers: {
-                Authorization: `${this.token}`
-            }
+                Authorization: `Bearer ${this.token}`
+            },
+            agent: this.httpsAgent
         })
         if (res.ok) {
             return await res.json()

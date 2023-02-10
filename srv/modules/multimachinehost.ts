@@ -76,10 +76,11 @@ export default new class MultiMachine {
     async fetchProcesses() {
         for (const peer of this.connections) {
             if(!peer.connected) continue
-            //TODO
+            this.   processes[peer.host.name] = await peer.getProcesses()
         }
         this.processes['main'] = await jandClient.getRuntimeProcessList()
         this.calculateCombinedProcessList()
+        return
     }
 
     getProcessList() {
