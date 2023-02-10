@@ -37,7 +37,7 @@ export class multimachineConnection extends EventEmitter {
                     retryCount++
                     return
                 }, 5000)
-                const res = await fetch(`https://${this.host.host}/api/multimachine/connection-test`, {
+                const res = await fetch(`https://${this.host.host}:${this.host.port}/api/multimachine/connection-test`, {
                     signal: controller.signal,
                     headers: {
                         Authorization: `${this.token}`
