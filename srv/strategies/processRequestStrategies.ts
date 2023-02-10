@@ -2,16 +2,18 @@ import { RuntimeProcessInfo } from "jand-ipc"
 import { jandClient } from "../utils/jandClient"
 import multimachine from "../modules/multimachinehost"
 
-export function getRuntimeProcessList() {
+export async function getRuntimeProcessList() {
     if (multimachine.isMultiMachine()) {
+        await multimachine.fetchProcesses()
+        return multimachine.combindProcessList
     } else {
         return jandClient.getRuntimeProcessList()
     }
 }
 
-export function getProcessInfo(name: string) {
+export async function getProcessInfo(name: string) {
     if (multimachine.isMultiMachine()) {
-        return multimachine.getProcess(name)
+        return await multimachine.getProcess(name)
     } else {
         return jandClient.getProcessInfo(name)
     }

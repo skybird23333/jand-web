@@ -40,6 +40,7 @@ export interface IBaseConfig {
  */
 export interface IMultimachineHostConfig extends IBaseConfig {
     peers: IPeerMachine[]
+    token: string
 }
 
 /**
@@ -47,5 +48,4 @@ export interface IMultimachineHostConfig extends IBaseConfig {
  */
 export interface IMultimachinePeerConfig extends IBaseConfig{
     tokenHash: string
-    expectedHost: string
 }

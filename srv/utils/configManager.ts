@@ -12,10 +12,8 @@ export default new class ConfigManager {
 
     loadModulesByConfig() {
         for (const module in this.config) {
-            if (this.config[module].enabled) {
-                require(`./modules/${module}`)
-                console.log(`Loaded module ${module}`)
-            }
+            require(`../modules/${module}`)
+            console.log(`Loaded module ${module}`)
         }
     }
 

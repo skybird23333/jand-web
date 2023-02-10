@@ -26,13 +26,8 @@ async function run() {
     app.use('/api', apiRouter)
     app.use(fallback('index.html', { root: 'dist-app' }))
 
-    configManager.loadModulesByConfig()
-
-    connectToJanD()
-}
-
-async function connectToJanD() {
     try {
+        configManager.loadModulesByConfig()
         await jandClient.connect()
         console.log('Connected to JanD')
         jandClient.subscribe(["errlog", "outlog", "procadd", "procdel", "procren", "procstart", "procstop"])
@@ -49,7 +44,6 @@ async function connectToJanD() {
         console.log('App is ready at http://localhost:' + (process.env.PORT || 3000))
         app.listen(process.env.PORT || 3000)
     }
-
 }
 
 run()

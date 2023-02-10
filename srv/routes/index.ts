@@ -3,6 +3,7 @@ import { apiError } from "../utils/apiError"
 import morgan from 'morgan'
 import cors from 'cors'
 import { jandClient } from "../utils/jandClient";
+import multimachinepeer from "../modules/multimachinepeer";
 
 export const apiRouter = Router()
 
@@ -15,11 +16,16 @@ apiRouter.use('*', (req:Request, res:Response, next:NextFunction) => {
     next()
 })
 
+if(multimachinepeer.isMultiMachinePeer()) {
+    apiRouter.use(multimachinepeer.peerAuthCheck)
+}
+
 apiRouter.use('/process', require('./process').router)
 apiRouter.use('/create', require('./create').router)
 apiRouter.use('/daemon', require('./daemon').router)
 apiRouter.use('/console', require('./console').router)
 apiRouter.use('/status', require('./status').router)
+multimachinepeer.setupPeerRoutes(apiRouter)
 
 apiRouter.get('/', (req:Request, res:Response) => {
     res.json({message: 'Hello World!'})
