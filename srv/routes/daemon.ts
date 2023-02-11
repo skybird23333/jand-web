@@ -4,6 +4,7 @@ import { apiError } from "../utils/apiError"
 import { hostname, userInfo } from "node:os"
 import { IDaemonSystemInfoResponse } from "../typings/interfaces"
 import batteryLevel from "battery-level"
+import { getSysInfoList } from "srv/strategies/sysinfoRequestStrategies"
 
 export const router = Router()
 
@@ -25,4 +26,9 @@ router.get('/system/', async (req: Request, res: Response) => {
 router.post('/save', async (req: Request, res: Response) => {
     await jandClient.saveConfig()
     res.status(204).send()
+})
+
+router.get('/all', async (req: Request, res: Response) => {
+    const data = await getSysInfoList()
+    res.json(data)
 })

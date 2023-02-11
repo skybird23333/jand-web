@@ -20,7 +20,6 @@ export interface IJandWebProcess extends RuntimeProcessInfo {
 }
 
 export interface IPeerMachine {
-    name: string
     host: string
     port: number
 }
@@ -49,3 +48,5 @@ export interface IMultimachineHostConfig extends IBaseConfig {
 export interface IMultimachinePeerConfig extends IBaseConfig{
     tokenHash: string
 }
+
+

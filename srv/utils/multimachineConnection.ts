@@ -1,6 +1,7 @@
 import { EventEmitter } from "node:stream"
 import fetch from "node-fetch"
-import { IPeerMachine } from "srv/typings/interfaces"
+import { IDaemonSystemInfoResponse, IPeerMachine } from "srv/typings/interfaces"
+import { DaemonStatus, RuntimeProcessInfo } from "jand-ipc"
 const http = require('http')
 /**
  * This class is responsible for handling the communication with other machines.
@@ -49,7 +50,7 @@ export class multimachineConnection extends EventEmitter {
                 if (res.ok) {
                     this.connected = true
                     this.connectFailError = ''
-                    return console.log('[multimachinehost] Connected to ' + this.host.name + '(' + this.host.host + ')' + ' successfully')
+                    this.emit('connected')
                 } else if (!res.ok) {
                     this.connectFailError = `${res.status} ${res.statusText} ${res.body}`
                     this.connected = false
@@ -69,12 +70,25 @@ export class multimachineConnection extends EventEmitter {
             } else continue
         }
         if(retryCount > 10) {
-            console.error(`[multimachinehost] Failed to connect to ${this.host.name}(${this.host.host}) after 10 retries`)
-            console.error(`[multimachinehost] Error: ${this.connectFailError}`)
+            this.emit('connectionFail')
         }
     }
 
-    async getProcesses() {
+    async getProcesses(): Promise<RuntimeProcessInfo[]> {
+        const res = await fetch(`http://${this.host.host}:${this.host.port}/api/process/all`, {
+            headers: {
+                Authorization: `Bearer ${this.token}`
+            },
+            agent: this.httpsAgent
+        })
+        if (res.ok) {
+            return await res.json()
+        } else {
+            throw new Error(`${res.status} ${res.statusText} ${res.body}`)
+        }
+    }
+    
+    async getSystemStatus(): Promise<{processes: RuntimeProcessInfo[], daemon: DaemonStatus, system: IDaemonSystemInfoResponse}> { //TODO: add type
         const res = await fetch(`http://${this.host.host}:${this.host.port}/api/process/all`, {
             headers: {
                 Authorization: `Bearer ${this.token}`

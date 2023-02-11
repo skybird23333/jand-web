@@ -195,10 +195,11 @@ For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-i
 
 Returns: An array of the following object:
 
-| Params | Type   | Description                                                                                                |
-| ------ | ------ | ---------------------------------------------------------------------------------------------------------- |
-| daemon | String | Status of the JanD Daemon of this machine                                                                  |
-| system | String | The system object of this machine. See [Get the system information(host)](#get-the-system-informationhost) |
+| Params    | Type                          | Description                                                                                                |
+| --------- | ----------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| processes | jand-ipc.RunTimeProcessInfo[] | A list of processes on the machine                                                                         |
+| daemon    | String                        | Status of the JanD Daemon of this machine                                                                  |
+| system    | String                        | The system object of this machine. See [Get the system information(host)](#get-the-system-informationhost) |
 
 # Console
 

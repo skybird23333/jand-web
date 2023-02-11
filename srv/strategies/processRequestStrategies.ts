@@ -4,7 +4,7 @@ import multimachine from "../modules/multimachinehost"
 
 export async function getRuntimeProcessList() {
     if (multimachine.isMultiMachine()) {
-        await multimachine.fetchProcesses()
+        await multimachine.fetchAllHosts()
         return multimachine.combindProcessList
     } else {
         return jandClient.getRuntimeProcessList()

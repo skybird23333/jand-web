@@ -1,10 +1,11 @@
 import { NextFunction } from 'express'
 import config from '../utils/configManager'
-import { IJandWebProcess, IMultimachineHostConfig, IMultimachinePeerConfig } from '../typings/interfaces'
+import { IDaemonSystemInfoResponse, IJandWebProcess, IMultimachineHostConfig, IMultimachinePeerConfig } from '../typings/interfaces'
 import { jandClient } from '../utils/jandClient'
 import { genRandStr } from '../utils/helpers'
 import { createHash } from 'crypto'
 import { multimachineConnection } from '../utils/multimachineConnection'
+import { DaemonStatus } from 'jand-ipc'
 
 /**
  * The multimachine class exports functions for communicating with other machines when in MultiMachine mode.
@@ -18,6 +19,12 @@ export default new class MultiMachine {
     combindProcessList: IJandWebProcess[]
     config: IMultimachineHostConfig
     connections: multimachineConnection[] = []
+    sysinfoList: {
+        [host: string]: {
+            daemon: DaemonStatus
+            system: IDaemonSystemInfoResponse
+        }
+    }
 
     constructor() {
         this.config = config.getConfigforModule<IMultimachineHostConfig>('multimachinehost')
@@ -50,6 +57,13 @@ export default new class MultiMachine {
         for (const peer of this.config.peers) {
             const connection = new multimachineConnection(peer, this.config.token)
             connection.initiateConnectionTest()
+            connection.on('connected', () => {
+                console.log(`[multimachinehost] Connected to ${peer.host}`)
+            })
+            connection.on('connectionFail', () => {
+                console.log(`[multimachinehost] Failed to connect to ${peer.host} after 10 retries`)
+                console.log(`[multimachinehost] Error: ${connection.connectFailError}`)
+            })
             this.connections.push(connection)
         }
     }
@@ -73,10 +87,15 @@ export default new class MultiMachine {
         }
     }
 
-    async fetchProcesses() {
+    async fetchAllHosts() {
         for (const peer of this.connections) {
             if(!peer.connected) continue
-            this.   processes[peer.host.name] = await peer.getProcesses()
+            const status = await peer.getSystemStatus()
+            this.processes[status.system.hostname] = status.processes
+            this.sysinfoList[status.system.hostname] = {
+                daemon: status.daemon,
+                system: status.system
+            }
         }
         this.processes['main'] = await jandClient.getRuntimeProcessList()
         this.calculateCombinedProcessList()
@@ -93,7 +112,10 @@ export default new class MultiMachine {
             jandClient.getProcessInfo(name)
         } else {
             return this.processes[process.Host].find(p => p.Name === name)
-            //TODO: Request it from host
         }
+    }
+
+    getSysInfoList() {
+        return this.sysinfoList
     }
 }
