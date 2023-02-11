@@ -7,6 +7,7 @@ import Card from '../components/Common/Card.vue';
 import Alert from '../components/Common/Alert.vue';
 import ProcessListComponent from '../components/Home/ProcessListComponent.vue';
 import userClient from '../http/userClient';
+import Tab from '../components/Common/Tab.vue';
 
 export default {
   name: 'HomeView',
@@ -17,8 +18,9 @@ export default {
     Button,
     Card,
     Alert,
-    ProcessListComponent
-  },
+    ProcessListComponent,
+    Tab
+},
   data() {
     return {
       processes: [],
@@ -27,6 +29,9 @@ export default {
       daemon: {
         Version: '',
         NotSaved: false,
+      },
+      options: {
+        mode: 'card' //card or list
       },
       sysInfo: {
         username: '',
@@ -51,7 +56,7 @@ export default {
   methods: {
     async fetchProcesses() {
       this.loading = true;
-      this.hosts = await userClient.getHosts();
+      this.hosts = await userClient.getAllHosts();
       this.loading = false;
     },
     async onSave() {
@@ -83,7 +88,13 @@ export default {
       </Alert>
     </template>
     <template #content>
-      <ProcessListComponent :processes="processes" :systemData="{ daemon, sysInfo }"></ProcessListComponent>
+      <Tab :data="['card', 'list']" default="card" v-model="options.mode"></Tab>
+      <ProcessListComponent
+        v-for="host in hosts"
+        :processes="host.processes"
+        :systemData="{ daemon: host.daemon, sysInfo: host.system }"
+        :options="options"
+      ></ProcessListComponent>
     </template>
   </Content>
 </template>

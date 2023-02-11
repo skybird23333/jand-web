@@ -24,7 +24,7 @@ export default new class MultiMachine {
             daemon: DaemonStatus
             system: IDaemonSystemInfoResponse
         }
-    }
+    } = {}
 
     constructor() {
         this.config = config.getConfigforModule<IMultimachineHostConfig>('multimachinehost')
@@ -88,6 +88,11 @@ export default new class MultiMachine {
     }
 
     async fetchAllHosts() {
+        this.sysinfoList['main'] = {
+            daemon: await jandClient.getDaemonStatus(),
+            system: await getSystemInformation()
+        }
+        this.processes['main'] = await jandClient.getRuntimeProcessList()
         for (const peer of this.connections) {
             if(!peer.connected) continue
             const status = await peer.getSystemStatus()
@@ -96,11 +101,6 @@ export default new class MultiMachine {
                 daemon: status.daemon,
                 system: status.system
             }
-        }
-        this.processes['main'] = await jandClient.getRuntimeProcessList()
-        this.sysinfoList['main'] = {
-            daemon: await jandClient.getDaemonStatus(),
-            system: await getSystemInformation()
         }
         this.calculateCombinedProcessList()
         return

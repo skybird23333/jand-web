@@ -89,7 +89,7 @@ export class multimachineConnection extends EventEmitter {
     }
     
     async getSystemStatus(): Promise<{processes: RuntimeProcessInfo[], daemon: DaemonStatus, system: IDaemonSystemInfoResponse}> { //TODO: add type
-        const res = await fetch(`http://${this.host.host}:${this.host.port}/api/process/all`, {
+        const res = await fetch(`http://${this.host.host}:${this.host.port}/api/status`, {
             headers: {
                 Authorization: `Bearer ${this.token}`
             },
