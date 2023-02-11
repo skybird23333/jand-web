@@ -4,9 +4,9 @@ import { jandClient } from "../utils/jandClient";
 
 export const router = Router()
 
-router.get('', (req, res) => {
-    const processes = jandClient.getRuntimeProcessList()
-    const daemon = jandClient.getDaemonStatus()
+router.get('', async (req, res) => {
+    const processes = await jandClient.getRuntimeProcessList()
+    const daemon = await jandClient.getDaemonStatus()
     const system = {
         username: userInfo().username,
         userInfo: userInfo(),
