@@ -4,7 +4,7 @@ import { apiError } from "../utils/apiError"
 import { hostname, userInfo } from "node:os"
 import { IDaemonSystemInfoResponse } from "../typings/interfaces"
 import batteryLevel from "battery-level"
-import { getSysInfoList } from "srv/strategies/sysinfoRequestStrategies"
+import { getSysInfoList } from "../strategies/sysinfoRequestStrategies"
 
 export const router = Router()
 

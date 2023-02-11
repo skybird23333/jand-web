@@ -2,7 +2,7 @@ import { NextFunction } from 'express'
 import config from '../utils/configManager'
 import { IDaemonSystemInfoResponse, IJandWebProcess, IMultimachineHostConfig, IMultimachinePeerConfig } from '../typings/interfaces'
 import { jandClient } from '../utils/jandClient'
-import { genRandStr } from '../utils/helpers'
+import { genRandStr, getSystemInformation } from '../utils/helpers'
 import { createHash } from 'crypto'
 import { multimachineConnection } from '../utils/multimachineConnection'
 import { DaemonStatus } from 'jand-ipc'
@@ -98,6 +98,10 @@ export default new class MultiMachine {
             }
         }
         this.processes['main'] = await jandClient.getRuntimeProcessList()
+        this.sysinfoList['main'] = {
+            daemon: await jandClient.getDaemonStatus(),
+            system: await getSystemInformation()
+        }
         this.calculateCombinedProcessList()
         return
     }

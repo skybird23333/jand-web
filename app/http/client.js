@@ -53,4 +53,8 @@ export default class Client {
             data
         })
     }
+
+    async getAllHosts() {
+        return await this.rest.get(`/daemon/all`)
+    }
 }

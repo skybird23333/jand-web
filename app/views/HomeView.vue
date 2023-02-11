@@ -31,7 +31,14 @@ export default {
       sysInfo: {
         username: '',
         hostname: ''
-      }
+      },
+      hosts: [
+        /**
+         * system
+         * daemon
+         * processes
+         */
+      ]
     }
   },
   mounted() {
@@ -44,9 +51,7 @@ export default {
   methods: {
     async fetchProcesses() {
       this.loading = true;
-      this.processes = await userClient.getAllProcess()
-      this.daemon = await userClient.getDaemonStatus()
-      this.sysInfo = await userClient.getSystemInfo()
+      this.hosts = await userClient.getHosts();
       this.loading = false;
     },
     async onSave() {
