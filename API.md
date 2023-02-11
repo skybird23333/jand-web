@@ -14,10 +14,11 @@
   - [Start/restart a process](#startrestart-a-process)
 - [Daemon](#daemon)
   - [Get JanD daemon status](#get-jand-daemon-status)
-  - [Save the daemon process list](#save-the-daemon-process-list)
+  - [Save the daemon process list(host)](#save-the-daemon-process-listhost)
   - [Get the daemon config](#get-the-daemon-config)
   - [Edit the daemon config](#edit-the-daemon-config)
-  - [Get the system information](#get-the-system-information)
+  - [Get the system information(host)](#get-the-system-informationhost)
+  - [Get daemon/system information of all hosts](#get-daemonsystem-information-of-all-hosts)
 - [Console](#console)
   - [Application log stream](#application-log-stream)
   - [Get application log](#get-application-log)
@@ -65,7 +66,7 @@ The server will not return 503 ander any other cases.
 JandWebErrors:
 | Error            | Description                                                                                               |
 | ---------------- | --------------------------------------------------------------------------------------------------------- |
-| "jand-conn-fail" | The target jand-web server was unable to connect to JanD through the default IPC pipe name.                              |
+| "jand-conn-fail" | The target jand-web server was unable to connect to JanD through the default IPC pipe name.               |
 | "unknown"        | The target jand-web server was unable to start for an unknown reason. Check server logs for more details. |
 # Processes
 
@@ -163,7 +164,7 @@ If the process is not running, this will start it up. If it is already running, 
 
 Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemonstatus--object)
 
-## Save the daemon process list
+## Save the daemon process list(host)
 
 **POST** `/daemon/save`
 
@@ -176,7 +177,7 @@ Returns: [jand-ipc.DaemonStatus](https://github.com/skybird23333/jand-ipc#daemon
 
 For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-ipc#config--object)
 
-## Get the system information
+## Get the system information(host)
 
 **GET** `/daemon/system`
 
@@ -184,6 +185,20 @@ For list of fields, see [jand-ipc.Config](https://github.com/skybird23333/jand-i
 | -------- | ------ | -------------------------------------------------------- |
 | hostname | String | The hostname(machine name) of the current active machine |
 | username | String | The current user name(that is running jand web)          |
+| battery  | Number | The battery percentage of the machine. e.g 0.4 = 40%     |
+
+## Get daemon/system information of all hosts
+
+> Result will only contain the host when not in multimachine mode.
+
+**GET** `/daemon/all`
+
+Returns: An array of the following object:
+
+| Params | Type   | Description                                                                                                |
+| ------ | ------ | ---------------------------------------------------------------------------------------------------------- |
+| daemon | String | Status of the JanD Daemon of this machine                                                                  |
+| system | String | The system object of this machine. See [Get the system information(host)](#get-the-system-informationhost) |
 
 # Console
 
