@@ -1,3 +1,4 @@
+import batteryLevel from "battery-level";
 import { Router } from "express";
 import { hostname, userInfo } from "os";
 import { jandClient } from "../utils/jandClient";
@@ -10,7 +11,8 @@ router.get('', async (req, res) => {
     const system = {
         username: userInfo().username,
         userInfo: userInfo(),
-        hostname: hostname()
+        hostname: hostname(),
+        battery: await batteryLevel()
     }
 
     res.json({
