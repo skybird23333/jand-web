@@ -20,7 +20,7 @@ export default {
     Alert,
     ProcessListComponent,
     Tab
-},
+  },
   data() {
     return {
       processes: [],
@@ -31,7 +31,7 @@ export default {
         NotSaved: false,
       },
       options: {
-        mode: 'card' //card or list
+        mode: 'list' //card or list
       },
       sysInfo: {
         username: '',
@@ -79,22 +79,22 @@ export default {
           New
         </Button>
       </h2>
-
-      <Alert v-if="daemon.NotSaved" type="warn">
-        Your process configuration list is unsaved. Changes made to it will be lost when you restart.
-        <Button type="primary" @click="onSave">
-          Save now
-        </Button>
-      </Alert>
     </template>
+    <div v-for="host in hosts">
+      <Alert type="warn" v-if="host.daemon.NotSaved">
+          Your process configuration list is unsaved. Changes made to it will be lost when you restart.
+          <Button type="primary" @click="onSave">
+            Save now
+          </Button>
+          <div style="color: var(--foreground-secondary)">
+            {{ host.system.hostname }}
+          </div>
+        </Alert>
+    </div>
     <template #content>
-      <Tab :data="['card', 'list']" default="card" v-model="options.mode"></Tab>
-      <ProcessListComponent
-        v-for="host in hosts"
-        :processes="host.processes"
-        :systemData="{ daemon: host.daemon, sysInfo: host.system }"
-        :options="options"
-      ></ProcessListComponent>
+      <Tab :data="['list', 'card']" default="list" v-model="options.mode"></Tab>
+      <ProcessListComponent v-for="host in hosts" :processes="host.processes"
+        :systemData="{ daemon: host.daemon, sysInfo: host.system }" :options="options"></ProcessListComponent>
     </template>
   </Content>
 </template>
