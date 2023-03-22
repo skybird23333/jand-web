@@ -42,14 +42,14 @@ export default {
 }
 </script>
 <template>
-    <tr class="process process-list" @click="onClicked" v-if="mode == 'list'">
+    <tr class="process process-list" @click="onClicked" v-if="mode == 'list'" :class="color">
         <td :style="`background-color: ${color}`">
         </td>
         <td>
           {{ process.SafeIndex }}
         </td>
         <td>
-          <b>{{ process.Name }}</b>
+          {{ process.Name }}
           <code class="code">
             <b>
               {{ process.Filename }}
@@ -117,6 +117,14 @@ export default {
   padding-left: 0.5em;
   margin: 0;
   filter: none;
+}
+
+.process-list.red {
+  background: linear-gradient(to right, rgba(255, 0, 0, 0.1), rgba(49, 0, 0, 0));
+}
+
+.process-list.green {
+  background: linear-gradient(to right, rgba(0, 255, 0, 0.1), rgba(0, 49, 0, 0));
 }
 
 .process:hover {
