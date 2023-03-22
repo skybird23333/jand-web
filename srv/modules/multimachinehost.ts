@@ -16,7 +16,7 @@ export default new class MultiMachine {
     processes: {
         [host: string]: IJandWebProcess[]
     } = {}
-    combindProcessList: IJandWebProcess[]
+    combindProcessList: IJandWebProcess[] = []
     config: IMultimachineHostConfig
     connections: multimachineConnection[] = []
     sysinfoList: {
@@ -76,13 +76,11 @@ export default new class MultiMachine {
         this.combindProcessList = []
         for (const host in this.processes) {
             for (const process of this.processes[host]) {
-                this.combindProcessList.push(Object.assign({
-                    Name: `${process.Name}` +
-                        this.combindProcessList.find(
-                            p => p.Name === process.Name
-                        ) ? `-${host}` : ``,
+                const data = Object.assign(process, {
+                    Name: process.Name + (this.combindProcessList.find(p => p.Name === process.Name) ? `-${host}` : ``),
                     Host: host
-                }, process))
+                })
+                this.combindProcessList.push(data)
             }
         }
     }
@@ -112,7 +110,7 @@ export default new class MultiMachine {
 
     getProcess(name: string) {
         const process = this.combindProcessList.find(p => p.Name === name)
-        if (!process.Host) { //process is on main
+        if (!process.Host || process.Host === 'main') { //process is on main
             jandClient.getProcessInfo(name)
         } else {
             return this.processes[process.Host].find(p => p.Name === name)
