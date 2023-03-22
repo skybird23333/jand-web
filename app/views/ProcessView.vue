@@ -136,6 +136,12 @@ export default {
           <Button type="danger" @click="stopProcess()" :disabled="!process.Running || this.loading">stop</Button>
         </div>
       </div>
+      <div class="info" v-if="process.Host != 'main' && process.Name?.endsWith(`-${process.Host}`)">
+        <p>
+          There is another process named <b>{{ process.Name.replace(`-${process.Host}`, '') }}</b> that exists on your main machine.
+          To help identify them, this process will show up as {{ process.Name }} on jand web. This change does not reflect in JanD.
+        </p>
+      </div>
     </ContentHead>
     <template #content>
       <RouterView></RouterView>
