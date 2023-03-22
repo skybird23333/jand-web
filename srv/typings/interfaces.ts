@@ -1,4 +1,5 @@
 import { ProcessInfo, RuntimeProcessInfo } from "jand-ipc"
+import { UserInfo } from "node:os"
 
 export interface IRuntimeConfigData {
     enabled: boolean
@@ -13,6 +14,12 @@ export interface IDaemonSystemInfoResponse {
     hostname: string
     username: string
     battery?: number
+    userInfo: UserInfo<string>
+    usage: {
+        cpu: number
+        totalmem: number
+        freemem: number
+    }
 }
 
 export interface IJandWebProcess extends RuntimeProcessInfo {
