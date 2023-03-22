@@ -7,14 +7,14 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "outDir": "./dist-srv",
-    "rootDir": "./srv",
+    "rootDir": ".",
     "baseUrl": ".",
     "types": [
       "node"
     ]
   },
   "include": [
-    "srv/**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "node_modules"
