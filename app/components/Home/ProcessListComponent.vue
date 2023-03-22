@@ -83,9 +83,6 @@ export default {
         }
     },
     data: () => ({
-        options: {
-            mode: 'card' //card or list
-        },
         processData: [],
     }),
     watch: {
