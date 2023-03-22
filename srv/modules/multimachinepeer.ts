@@ -28,13 +28,17 @@ export default new class MultiMachinePeer {
         return this.config.enabled
     }
 
+    verifyToken(token: string) {
+        return createHash('sha256').update(token).digest('hex') === this.config.tokenHash;
+    }
+
+
     //**This should be run  */
     peerAuthCheck(req: Request, res: Response, next: NextFunction) {
         req.app.get('/*', (req, res) => {
             if (!req.headers['authorization']) return res.status(401).send('Unauthorized')
             const token = req.headers['authorization'].split(' ')[1]
-            if (!token) return res.status(401).send('Unauthorized')
-            if (createHash('sha256').update(token).digest('hex') !== this.config.tokenHash) return res.status(401).send('Unauthorized')
+            if (!token || !this.verifyToken(token)) return res.status(401).send('Unauthorized')
         })
         next()
     }
@@ -44,16 +48,13 @@ export default new class MultiMachinePeer {
         app.get('/multimachine/connection-test', (req, res) => {
             if (!req.headers['authorization']) return res.status(401).send('Unauthorized')
             const token = req.headers['authorization'].split(' ')[1]
-            if (!token) return res.status(401).send('Unauthorized')
-            if (createHash('sha256').update(token).digest('hex') !== this.config.tokenHash) return res.status(401).send('Unauthorized')
+            if (!token || !this.verifyToken(token)) return res.status(401).send('Unauthorized')
             res.status(200).send({ success: true })
         })
         app.get('/multimachine/process-events', (req, res) => {
             if (!req.headers['authorization']) return res.status(401).send('Unauthorized')
             const token = req.headers['authorization'].split(' ')[1]
-            if (!token) return res.status(401).send('Unauthorized')
-            if (createHash('sha256').update(token).digest('hex') !== this.config.tokenHash) return res.status(401).send('Unauthorized')
-            //TODO:z
+            if (!token || !this.verifyToken(token)) return res.status(401).send('Unauthorized')
         })
     }
 }
