@@ -48,7 +48,7 @@ export default {
 
 .logview {
   overflow-y: auto;
-  height: 200px;
+  height: 70vh;
 }
 
 .input {

@@ -1,8 +1,9 @@
 import express from 'express'
 import { apiRouter } from './routes'
 import fallback from 'express-history-api-fallback'
-import { jandClient } from './modules/jandClient'
+import { jandClient } from './utils/jandClient'
 import cors from 'cors'
+import configManager from './utils/configManager'
 
 const app = express()
 
@@ -24,11 +25,9 @@ async function run() {
     app.use('/', express.static('dist-app'))
     app.use('/api', apiRouter)
     app.use(fallback('index.html', { root: 'dist-app' }))
-    connectToJanD()
-}
 
-async function connectToJanD() {
     try {
+        configManager.loadModulesByConfig()
         await jandClient.connect()
         console.log('Connected to JanD')
         jandClient.subscribe(["errlog", "outlog", "procadd", "procdel", "procren", "procstart", "procstop"])
@@ -45,7 +44,6 @@ async function connectToJanD() {
         console.log('App is ready at http://localhost:' + (process.env.PORT || 3000))
         app.listen(process.env.PORT || 3000)
     }
-
 }
 
 run()

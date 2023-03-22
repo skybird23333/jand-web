@@ -3,8 +3,7 @@ import { inject } from 'vue';
 import Card from '../../components/Common/Card.vue';
 
 const process = inject('process');
-
-console.log(process.Filename)
+console.log(process.value)
 </script>
 
 <template>

@@ -7,6 +7,7 @@ import Card from '../components/Common/Card.vue';
 import Alert from '../components/Common/Alert.vue';
 import ProcessListComponent from '../components/Home/ProcessListComponent.vue';
 import userClient from '../http/userClient';
+import Tab from '../components/Common/Tab.vue';
 
 export default {
   name: 'HomeView',
@@ -17,7 +18,8 @@ export default {
     Button,
     Card,
     Alert,
-    ProcessListComponent
+    ProcessListComponent,
+    Tab
   },
   data() {
     return {
@@ -28,10 +30,20 @@ export default {
         Version: '',
         NotSaved: false,
       },
+      options: {
+        mode: 'list' //card or list
+      },
       sysInfo: {
         username: '',
         hostname: ''
-      }
+      },
+      hosts: [
+        /**
+         * system
+         * daemon
+         * processes
+         */
+      ]
     }
   },
   mounted() {
@@ -44,9 +56,7 @@ export default {
   methods: {
     async fetchProcesses() {
       this.loading = true;
-      this.processes = await userClient.getAllProcess()
-      this.daemon = await userClient.getDaemonStatus()
-      this.sysInfo = await userClient.getSystemInfo()
+      this.hosts = await userClient.getAllHosts();
       this.loading = false;
     },
     async onSave() {
@@ -69,16 +79,22 @@ export default {
           New
         </Button>
       </h2>
-
-      <Alert v-if="daemon.NotSaved" type="warn">
-        Your process configuration list is unsaved. Changes made to it will be lost when you restart.
-        <Button type="primary" @click="onSave">
-          Save now
-        </Button>
-      </Alert>
     </template>
+    <div v-for="host in hosts">
+      <Alert type="warn" v-if="host.daemon.NotSaved">
+          Your process configuration list is unsaved. Changes made to it will be lost when you restart.
+          <Button type="primary" @click="onSave">
+            Save now
+          </Button>
+          <div style="color: var(--foreground-secondary)">
+            {{ host.system.hostname }}
+          </div>
+        </Alert>
+    </div>
     <template #content>
-      <ProcessListComponent :processes="processes" :systemData="{ daemon, sysInfo }"></ProcessListComponent>
+      <Tab :data="['list', 'card']" default="list" v-model="options.mode"></Tab>
+      <ProcessListComponent v-for="host in hosts" :processes="host.processes"
+        :systemData="{ daemon: host.daemon, sysInfo: host.system }" :options="options"></ProcessListComponent>
     </template>
   </Content>
 </template>

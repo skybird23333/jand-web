@@ -1,17 +1,15 @@
+import batteryLevel from "battery-level";
 import { Router } from "express";
 import { hostname, userInfo } from "os";
-import { jandClient } from "../modules/jandClient";
+import { getSystemInformation } from "../utils/helpers";
+import { jandClient } from "../utils/jandClient";
 
 export const router = Router()
 
-router.get('', (req, res) => {
-    const processes = jandClient.getRuntimeProcessList()
-    const daemon = jandClient.getDaemonStatus()
-    const system = {
-        username: userInfo().username,
-        userInfo: userInfo(),
-        hostname: hostname()
-    }
+router.get('', async (req, res) => {
+    const processes = await jandClient.getRuntimeProcessList()
+    const daemon = await jandClient.getDaemonStatus()
+    const system = getSystemInformation()
 
     res.json({
         processes,

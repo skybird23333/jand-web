@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express"
 import ConsoleLogStreamManager from "../utils/ConsoleLogStreamManager"
-import { apiError } from "../modules/apiError"
-import { jandClient } from "../modules/jandClient"
+import { apiError } from "../utils/apiError"
+import { jandClient } from "../utils/jandClient"
 
 export const router = Router()
 

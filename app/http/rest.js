@@ -7,14 +7,39 @@ import FatalError from "./FatalError"
  export default class REST {
     constructor(token) {
         this.token = token
+        this.isWaitingForBaseURL = false
         if(process.env.NODE_ENV === "production") {
             this.baseURL = '/api'
         }
     }
 
-    async findBaseURL() {
+    async waitForBaseURL() {
+        if(this.baseURL) return this.baseURL
+        if(this.isWaitingForBaseURL) {
+            return new Promise((res, rej) => {
+                const interval = setInterval(checkForBaseURL, 200)
+                function checkForBaseURL () {
+                    if(this.baseURL) return res(this.baseURL)
+                    clearInterval(interval)
+                }
+            })
+        }
+        else {
+            this.isWaitingForBaseURL = true
+            await this.fetchBaseURL()
+        }
+    }
+    
+    async fetchBaseURL() {
         try { //Development mode
-            await fetch('//localhost:3000/api')
+            const res = await Promise.race([
+                fetch('//localhost:3000/api'),
+                new Promise(res => {setTimeout(() => {res('DEV SERVER TIMED OUT')}, 10000)})
+            ])
+            if(res === 'DEV SERVER TIMED OUT') {
+                console.warn('Development server request timed out')
+                throw Error()
+            }
             console.log('Development server detected')
             this.baseURL = '//localhost:3000/api'
         }
@@ -31,7 +56,7 @@ import FatalError from "./FatalError"
      * @returns The fetch res object
      */
     async request(path, options, auth=false) {
-        if(!this.baseURL) await this.findBaseURL()
+        if(!this.baseURL) await this.waitForBaseURL()
         const response = await fetch(
             `${this.baseURL}${path}`,
             Object.assign(options, {

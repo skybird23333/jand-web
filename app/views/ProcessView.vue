@@ -30,8 +30,7 @@ export default {
         Arguments: []
       },
       loading: false,
-      status: 'none',
-      stream: null
+      status: 'none'
     }
   },
   async mounted() {
@@ -114,10 +113,6 @@ export default {
 <template>
 
   <Sidebar>
-    <RouterLink to="/">
-      <span class="material-icons">arrow_back</span>
-      <span>Back</span>
-    </RouterLink>
     <RouterLink :to="`/process/${ process.Name }/dashboard`">
       <span class="material-icons">dashboard</span>
       <span>Dashboard</span>
@@ -140,6 +135,12 @@ export default {
           }}start</Button>
           <Button type="danger" @click="stopProcess()" :disabled="!process.Running || this.loading">stop</Button>
         </div>
+      </div>
+      <div class="info" v-if="process.Host != 'main' && process.Name?.endsWith(`-${process.Host}`)">
+        <p>
+          There is another process named <b>{{ process.Name.replace(`-${process.Host}`, '') }}</b> that exists on your main machine.
+          To help identify them, this process will show up as {{ process.Name }} on jand web. This change does not reflect in JanD.
+        </p>
       </div>
     </ContentHead>
     <template #content>

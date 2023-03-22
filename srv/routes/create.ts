@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express"
-import { apiError } from "../modules/apiError"
+import { apiError } from "../utils/apiError"
 import fs from 'node:fs'
 import resursivelyCheckWritable, { RecursiveLimitError } from "../utils/recursively-check-writable"
 

@@ -1,20 +1,21 @@
-import { apiError } from "../modules/apiError"
+import { apiError } from "../utils/apiError"
 import validateRequestBody from "../utils/validate-request-body"
 import { NextFunction, Request, Response, Router } from "express"
-import { IRenameProcessData, IRuntimeConfigData } from "srv/typings/interfaces"
-import { jandClient } from "../modules/jandClient"
+import { IRenameProcessData, IRuntimeConfigData } from "../typings/interfaces"
+import { jandClient } from "../utils/jandClient"
+import { getProcessInfo, getRuntimeProcessList } from "../strategies/processRequestStrategies"
 
 export const router = Router()
 
 router.get('/all', async (req: Request, res: Response) => {
-    res.json(await jandClient.getRuntimeProcessList())
+    res.json(await getRuntimeProcessList())
 })
 
 router.use('/:name/*', async (req: Request, res: Response, next: NextFunction) => {
     // check if process exists
     const name = req.params.name
     if(!name) next()
-    if(!await jandClient.getProcessInfo(name)) {
+    if(!await getProcessInfo(name)) {
         apiError(req, res, 404, 'Process not found')
     }
     next()
@@ -109,5 +110,5 @@ router.post('/:name/restart', async (req, res) => {
 
 router.get('/:name/', async (req: Request, res: Response) => {
     const { name } = req.params
-    res.json(await jandClient.getProcessInfo(name))
+    res.json(await getProcessInfo(name))
 })

@@ -7,6 +7,7 @@ import Notifications from '@kyvg/vue3-notification'
 import './assets/main.css'
 
 const app = createApp(App)
+app.config.unwrapInjectedRef = true
 
 const client = new Client()
 
