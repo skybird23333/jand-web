@@ -41,9 +41,6 @@ export interface IBaseConfig {
 /**
  * multimachinehost
  */
-/**
- * multimachinehost
- */
 export interface IMultimachineHostConfig extends IBaseConfig {
     peers: IPeerMachine[]
     token: string
